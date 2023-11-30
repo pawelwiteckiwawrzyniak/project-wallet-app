@@ -1,11 +1,5 @@
 # project-wallet-app
 
-## Na początku
-
-```shell
-npm install
-```
-
 ## Praca
 
 ```shell
