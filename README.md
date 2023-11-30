@@ -1,12 +1,12 @@
 # project-wallet-app
 
-## Przed rozpoczęciem pracy
+## Na początku
 
 ```shell
 npm install
 ```
 
-### Praca
+## Praca
 
 ```shell
 npm run dev
