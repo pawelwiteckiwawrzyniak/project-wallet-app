@@ -2,10 +2,10 @@
   "name": "parcel-project-template",
   "version": "1.1.0",
   "description": "",
-  "homepage": "https://pawelwiteckiwawrzyniak.github.io/Wallet-App",
+  "homepage": "https://pawelwiteckiwawrzyniak.github.io/project-wallet-app",
   "scripts": {
     "dev": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url Wallet-App"
+    "build": "parcel build src/*.html --public-url /project-wallet-app/"
   },
   "repository": {
     "type": "git",
