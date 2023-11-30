@@ -1,5 +1,11 @@
 # project-wallet-app
 
+## Na początku
+
+```shell
+npm ci
+```
+
 ## Praca
 
 ```shell
