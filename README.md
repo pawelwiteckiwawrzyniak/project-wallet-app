@@ -22,5 +22,5 @@ npm run dev
 https://vitejs.dev/guide/
 
 ### Przydatny film z przykładową aplikacją zbudowaną na MERN i react
-https://youtu.be/oJBu2k7OEk8?si=qZaIH0wh_givz5_Q
+https://www.youtube.com/watch?v=oJBu2k7OEk8
 
