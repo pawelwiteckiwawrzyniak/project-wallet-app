@@ -21,6 +21,6 @@ npm run dev
 ### Dokumentacja vite
 https://vitejs.dev/guide/
 
-### Przydatny film z przykładową aplikacją zbudowaną na MERN i react
+### Przydatny film z przykładową aplikacją zbudowaną na MERN (to samo co u nas)
 https://www.youtube.com/watch?v=oJBu2k7OEk8
 
