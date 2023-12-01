@@ -1,14 +1,14 @@
 # INSTALACJA
 
-`shell
+```shell
 cd server
 npm i
-`
+```
 
-`shell
+```shell
 cd client
 npm i
-`
+```
 
 ## Dokomentacja vite
 
