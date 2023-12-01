@@ -4,9 +4,10 @@
 cd server
 npm i
 ```
+potem
 
 ```shell
-cd client
+cd ../client
 npm i
 ```
 
