@@ -1,23 +1,10 @@
-## Instalacja
+# Instalacja i praca
+
+Najwygodniej będzie mieć na jednym terminalu server
 
 ```shell
 cd server
 npm i
-```
-
-potem
-
-```shell
-cd ../client
-npm i
-```
-
-## Praca
-
-Na jednym terminalu odpalamy server,
-
-```shell
-cd server
 npm run dev
 ```
 
@@ -25,6 +12,7 @@ a na drugim client
 
 ```shell
 cd client
+npm i
 npm run dev
 ```
 
