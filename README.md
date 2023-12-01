@@ -1,4 +1,4 @@
-## INSTALACJA
+## Instalacja
 
 ```shell
 cd server
