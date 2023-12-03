@@ -1,7 +1,7 @@
 import { useAuth } from "../hooks/userAuth";
 import { useTransactions } from "../hooks/userTransactions";
 
-export const TestComponent = () => {
+export const TestStoreReduxComponent = () => {
   const { user, token, balance, isAuth, isRefresh } = useAuth();
   const { transactions, isLoading, error } = useTransactions();
 
@@ -28,7 +28,9 @@ export const TestComponent = () => {
 
   return (
     <>
-      <div>test</div>
+      <div>
+        <h1>Test store redux</h1>
+      </div>
     </>
   );
 };
