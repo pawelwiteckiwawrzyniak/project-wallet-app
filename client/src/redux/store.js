@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { createSlice, configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/authSlice";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
@@ -18,11 +18,22 @@ const authPersistConfig = {
   storage,
   whitelist: ["token"],
 };
-
+export const globalSlice = createSlice({
+  name: 'global',
+  initialState: {
+    isLoading: false,
+  },
+  reducers: {
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
+  },
+});
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
     transactions: transactionsReduser,
+    global: globalSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
