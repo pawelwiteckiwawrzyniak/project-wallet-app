@@ -1,0 +1,11 @@
+.chart {
+  max-width: 288px;
+}
+
+.chart-title {
+  font-size: 30px;
+  font-family: var(--font-primary);
+  text-align: start;
+  margin-bottom: 20px;
+  margin-top: 0px;
+}
