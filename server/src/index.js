@@ -5,7 +5,9 @@ import morgan from "morgan";
 import { router } from "./routes.js";
 import "dotenv/config";
 
-const connection = mongoose.connect(process.env.MONGO_DB);
+const connection = mongoose.connect(
+  "mongodb+srv://admin:mWIwzYUSbXhR3Qn5@project-wallet-app.ifoipjf.mongodb.net/db"
+);
 
 const app = express();
 const formatsLogger = "dev";
