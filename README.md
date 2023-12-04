@@ -1,4 +1,4 @@
-# project-wallet-app# Instalacja i praca
+# Instalacja i praca
 
 Najwygodniej będzie mieć na jednym terminalu server
 
@@ -8,7 +8,7 @@ npm i
 npm run dev
 ```
 
-a na drugim client
+a na drugim clienta
 
 ```shell
 cd client
@@ -19,7 +19,9 @@ npm run dev
 ## Przydatne linki
 
 ### Dokumentacja vite
+
 https://vitejs.dev/guide/
 
-### Przydatny film z przykładową aplikacją zbudowaną na MERN (to samo co u nas)
+### Przydatny film z przykładową aplikacją MERN
+
 https://www.youtube.com/watch?v=oJBu2k7OEk8
