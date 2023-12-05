@@ -6,8 +6,7 @@ import { router } from "./routes.js";
 import "dotenv/config";
 
 const uriDb =
-  "mongodb+srv://LeMichall:maisy12034@cluster0.5gsu6rz.mongodb.net/";
-// "mongodb+srv://admin:mWIwzYUSbXhR3Qn5@project-wallet-app.ifoipjf.mongodb.net/db";
+  "mongodb+srv://admin:mWIwzYUSbXhR3Qn5@project-wallet-app.ifoipjf.mongodb.net/db";
 const connection = mongoose.connect(uriDb);
 
 const app = express();

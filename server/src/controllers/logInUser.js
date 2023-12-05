@@ -1,5 +1,5 @@
 import { User } from "../models/users.js";
-import { genToken } from "../auth/tokenAuth.js";
+import { genToken } from "../middleware/authToken.js";
 
 export async function logInUser(req, res, next) {
   const { email, password } = req.body;
