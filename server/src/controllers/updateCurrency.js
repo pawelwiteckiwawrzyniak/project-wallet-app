@@ -14,5 +14,7 @@ export async function updateCurrency(req, res, next) {
       description: "Updated currency database",
       data: { updatedCurrencies },
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 }

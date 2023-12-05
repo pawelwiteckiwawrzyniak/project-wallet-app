@@ -6,6 +6,6 @@ export async function logoutUser(req, res, next) {
     await User.findByIdAndUpdate(id, { token: "" });
     return res.status(204).json({ description: "User signed out" });
   } catch (error) {
-    return next(error);
+    return res.status(400).json({ message: error.message });
   }
 }

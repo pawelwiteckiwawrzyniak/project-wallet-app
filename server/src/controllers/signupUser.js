@@ -16,7 +16,7 @@ export async function signupUser(req, res, next) {
         balance: newUser.balance,
       },
     });
-  } catch (e) {
-    console.error(e.message);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 }

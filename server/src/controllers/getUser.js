@@ -13,7 +13,7 @@ export async function getUser(req, res, next) {
       email: currentUser.email,
       balance: currentUser.balance,
     });
-  } catch (e) {
-    return console.error(e.message);
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
   }
 }
