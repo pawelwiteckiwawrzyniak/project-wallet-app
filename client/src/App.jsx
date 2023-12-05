@@ -8,13 +8,13 @@ import { Balance } from './components/Balance/Balance';
 import {ModalLoadOut} from './components/ModalLoadOut/ModalLoadOut';
 import {LoadSpinner} from './components/LoadSpinner/LoadSpinner';
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 import { useAuth } from "./hooks/userAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { refreshUserTest } from "./redux/auth/operations";
-  
+
 function App() {
   const dispatch = useDispatch();
   const { isRefresh } = useAuth();
@@ -40,13 +40,13 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch({ type: 'START_LOADING' });
+    dispatch({ type: "START_LOADING" });
 
     setTimeout(() => {
-      dispatch({ type: 'STOP_LOADING' });
+      dispatch({ type: "STOP_LOADING" });
     }, 3000);
   }, [dispatch]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,8 +58,6 @@ function App() {
     };
     fetchData();
   }, [dispatch]);
-
-
 
   return (
     <>
@@ -82,21 +80,18 @@ function App() {
           </Route>
         )}
       </Routes>
-      <TestStoreReduxComponent />
       <ToastContainer />
-      <Balance />
       {showLoginForm ? (
         <LoginForm onRegisterClick={handleRegisterClick} />
       ) : (
         <SignupForm onLoginClick={handleLoginClick} />
       )}
-      <ChartWrapper />
       <button className="exit-button" onClick={handleOpenModal}>
         EXIT
       </button>
       {isModalOpen && <ModalLoadOut onClose={handleCloseModal} />}
       <LoadSpinner loading={isLoading} />
     </>
-  )
+  );
 }
 export default App;
