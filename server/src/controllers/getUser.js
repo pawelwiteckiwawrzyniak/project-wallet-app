@@ -6,7 +6,7 @@ export async function getUser(req, res, next) {
     const currentUser = await User.findOne({ _id: id });
     if (!currentUser)
       return res.status(404).json({ description: "User does not exist" });
-    return res.status(204).json({
+    return res.status(200).json({
       description: "User exists",
       id: currentUser._id,
       username: currentUser.name,
