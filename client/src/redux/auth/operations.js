@@ -87,3 +87,15 @@ export const refreshUser = createAsyncThunk(
     }
   }
 );
+
+//test function
+export const refreshUserTest = createAsyncThunk(
+  "auth/refresh",
+  async (_, thunkAPI) => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
