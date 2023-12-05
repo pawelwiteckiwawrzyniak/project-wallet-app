@@ -1,6 +1,4 @@
 import express from "express";
-import { hello } from "./controllers/test.js";
-import { getTest } from "./controllers/getTest.js";
 import { signupUser } from "./controllers/signupUser.js";
 import { logoutUser } from "./controllers/logoutUser.js";
 import { getUser } from "./controllers/getUser.js";

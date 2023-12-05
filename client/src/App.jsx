@@ -1,24 +1,34 @@
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { TestStoreReduxComponent } from './components/TestReduxStore';
-import { Balance } from './components/Balance/Balance';
-import {ModalLoadOut} from './components/ModalLoadOut/ModalLoadOut';
-import {LoadSpinner} from './components/LoadSpinner/LoadSpinner';
+import SignupForm from "./components/RegistrationForm/RegistrationForm";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Balance } from "./components/Balance/Balance";
+import { ModalLoadOut } from "./components/ModalLoadOut/ModalLoadOut";
+import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner";
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 import { useAuth } from "./hooks/userAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { refreshUserTest } from "./redux/auth/operations";
-  
+
 function App() {
   const dispatch = useDispatch();
   const { isRefresh } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLoading = useSelector((state) => state.global.isLoading);
+
+  const [showLoginForm, setShowLoginForm] = useState(true);
+
+  const handleLoginClick = () => {
+    setShowLoginForm(true);
+  };
+
+  const handleRegisterClick = () => {
+    setShowLoginForm(false);
+  };
 
   const handleOpenModal = () => {
     setIsModalOpen(true);
@@ -29,13 +39,13 @@ function App() {
   };
 
   useEffect(() => {
-    dispatch({ type: 'START_LOADING' });
+    dispatch({ type: "START_LOADING" });
 
     setTimeout(() => {
-      dispatch({ type: 'STOP_LOADING' });
+      dispatch({ type: "STOP_LOADING" });
     }, 3000);
   }, [dispatch]);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,7 +57,6 @@ function App() {
     };
     fetchData();
   }, [dispatch]);
-
 
   return (
     <>
@@ -70,17 +79,18 @@ function App() {
           </Route>
         )}
       </Routes>
-      <TestStoreReduxComponent />
       <ToastContainer />
-      <Balance />
-      <LoginForm />
-      <ChartWrapper />
+      {showLoginForm ? (
+        <LoginForm onRegisterClick={handleRegisterClick} />
+      ) : (
+        <SignupForm onLoginClick={handleLoginClick} />
+      )}
       <button className="exit-button" onClick={handleOpenModal}>
         EXIT
       </button>
       {isModalOpen && <ModalLoadOut onClose={handleCloseModal} />}
       <LoadSpinner loading={isLoading} />
     </>
-  )
+  );
 }
 export default App;
