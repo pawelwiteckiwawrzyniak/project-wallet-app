@@ -3,9 +3,8 @@ import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
-import { Link } from "react-router-dom";
 
-const LoginForm = () => {
+const LoginForm = (props) => {
   const [error, setError] = useState("");
   const dispatch = useDispatch();
 
@@ -85,11 +84,15 @@ const LoginForm = () => {
           <button className={css.loginButton} type="submit">
             Login
           </button>
-          <Link to="/register">
-            <button className={css.button} type="button">
-              Register
-            </button>
-          </Link>
+
+          <button
+            className={css.button}
+            type="button"
+            onClick={props.onRegisterClick}
+          >
+            Register
+          </button>
+
           {error && <p>{error}</p>}
         </Form>
       )}

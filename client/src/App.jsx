@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
-import React, { useState, useEffect } from 'react';
+import SignupForm from "./components/RegistrationForm/RegistrationForm";
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TestStoreReduxComponent } from './components/TestReduxStore';
 import { Balance } from './components/Balance/Balance';
@@ -20,6 +21,16 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLoading = useSelector((state) => state.global.isLoading);
 
+  const [showLoginForm, setShowLoginForm] = useState(true);
+
+  const handleLoginClick = () => {
+    setShowLoginForm(true);
+  };
+
+  const handleRegisterClick = () => {
+    setShowLoginForm(false);
+  };
+  
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -49,6 +60,7 @@ function App() {
   }, [dispatch]);
 
 
+
   return (
     <>
       <Routes>
@@ -73,7 +85,11 @@ function App() {
       <TestStoreReduxComponent />
       <ToastContainer />
       <Balance />
-      <LoginForm />
+      {showLoginForm ? (
+        <LoginForm onRegisterClick={handleRegisterClick} />
+      ) : (
+        <SignupForm onLoginClick={handleLoginClick} />
+      )}
       <ChartWrapper />
       <button className="exit-button" onClick={handleOpenModal}>
         EXIT
