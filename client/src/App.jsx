@@ -1,6 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Balance } from "./components/Balance/Balance";
+import LoginForm from "./components/LoginForm/LoginForm";
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
 import { useDispatch } from "react-redux";
 import { useAuth } from "./hooks/userAuth";
@@ -45,6 +46,10 @@ function App() {
           </Route>
         )}
       </Routes>
+      <TestStoreReduxComponent />
+      <Balance />
+      <LoginForm />
+      <ChartWrapper />
     </>
   );
 }

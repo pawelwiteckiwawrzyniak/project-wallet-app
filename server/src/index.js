@@ -5,12 +5,10 @@ import morgan from "morgan";
 import { router } from "./routes.js";
 import "dotenv/config";
 
-const uriDb =
-  "mongodb+srv://admin:mWIwzYUSbXhR3Qn5@project-wallet-app.ifoipjf.mongodb.net/db";
-const connection = mongoose.connect(uriDb);
+const connection = mongoose.connect(process.env.MONGO_DB);
 
 const app = express();
-const formatsLogger = app.get("env") === "development" ? "dev" : "short";
+const formatsLogger = "dev";
 
 app.use(express.json());
 app.use(morgan(formatsLogger));
@@ -26,8 +24,8 @@ app.use((err, req, res, next) => {
 
 connection
   .then(() => {
-    app.listen(3000, () => {
-      console.log("Database connection successful, port 3000");
+    app.listen(5173, () => {
+      console.log("Database connection successful, port 5173");
     });
   })
   .catch((error) => {
