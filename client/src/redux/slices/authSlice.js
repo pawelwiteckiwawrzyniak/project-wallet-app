@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { register, logIn, logOut, refreshUser } from "../auth/operations";
+import {
+  register,
+  logIn,
+  logOut,
+  refreshUser,
+  refreshUserTest,
+} from "../auth/operations";
 
 const initialState = {
   user: { name: "Test User", email: "Test Email" },
   token: "Test Token",
   balance: 20000,
-  isAuth: false,
+  isAuth: true,
   isRefresh: false,
 };
 
@@ -44,6 +50,14 @@ const authSlice = createSlice({
       state.isRefresh = false;
     },
     [refreshUser.rejected](state) {
+      state.isRefresh = false;
+    },
+    //test
+    [refreshUserTest.pending](state) {
+      state.isRefresh = true;
+    },
+    //test
+    [refreshUserTest.fulfilled](state) {
       state.isRefresh = false;
     },
   },
