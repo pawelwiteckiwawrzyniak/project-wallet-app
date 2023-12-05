@@ -7,7 +7,7 @@ import { getUser } from "./controllers/getUser.js";
 import { addTransaction } from "./controllers/addTransaction.js";
 import { indexCategories } from "./controllers/indexCategories.js";
 import { indexCurrency } from "./controllers/indexCurrency.js";
-import { authMiddleware } from "./auth/tokenAuth.js";
+import { authMiddleware } from "./middleware/authToken.js";
 import { logInUser } from "./controllers/logInUser.js";
 
 export const router = express.Router();
