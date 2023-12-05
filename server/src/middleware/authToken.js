@@ -3,7 +3,7 @@ import JWT from "jsonwebtoken";
 import { User } from "../models/users.js";
 
 dotenv.config();
-const { JWT_SECRET: secretKey } = process.env;
+const { SECRET_KEY: secretKey } = process.env;
 export const genToken = (user) => {
   return JWT.sign(user, secretKey, { expiresIn: "12h" });
 };
