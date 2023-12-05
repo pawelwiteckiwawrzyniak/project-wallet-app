@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import { router } from "./routes.js";
 import "dotenv/config";
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
 
 const connection = mongoose.connect(process.env.MONGO_DB);
 
