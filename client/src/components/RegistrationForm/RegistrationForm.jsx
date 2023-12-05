@@ -24,7 +24,7 @@ const SignupSchema = Yup.object().shape({
     .required("Required"),
 });
 
-const SignupForm = () => {
+const SignupForm = (props) => {
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState("");
@@ -158,7 +158,13 @@ const SignupForm = () => {
           >
             Register
           </button>
-          <button className={css.button} type="button" disabled={isSubmitting}>
+
+          <button
+            className={css.button}
+            type="button"
+            disabled={isSubmitting}
+            onClick={props.onLoginClick}
+          >
             Login
           </button>
 

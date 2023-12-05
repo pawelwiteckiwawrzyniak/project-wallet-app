@@ -1,10 +1,12 @@
 import { Route, Routes } from "react-router-dom";
 import LoginForm from "./components/LoginForm/LoginForm";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Balance } from "./components/Balance/Balance";
-import { ModalLoadOut } from "./components/ModalLoadOut/ModalLoadOut";
-import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner";
+import SignupForm from "./components/RegistrationForm/RegistrationForm";
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { TestStoreReduxComponent } from './components/TestReduxStore';
+import { Balance } from './components/Balance/Balance';
+import {ModalLoadOut} from './components/ModalLoadOut/ModalLoadOut';
+import {LoadSpinner} from './components/LoadSpinner/LoadSpinner';
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -19,6 +21,16 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLoading = useSelector((state) => state.global.isLoading);
 
+  const [showLoginForm, setShowLoginForm] = useState(true);
+
+  const handleLoginClick = () => {
+    setShowLoginForm(true);
+  };
+
+  const handleRegisterClick = () => {
+    setShowLoginForm(false);
+  };
+  
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
@@ -69,7 +81,11 @@ function App() {
         )}
       </Routes>
       <ToastContainer />
-      <LoginForm />
+      {showLoginForm ? (
+        <LoginForm onRegisterClick={handleRegisterClick} />
+      ) : (
+        <SignupForm onLoginClick={handleLoginClick} />
+      )}
       <button className="exit-button" onClick={handleOpenModal}>
         EXIT
       </button>
