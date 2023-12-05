@@ -19,13 +19,12 @@
 .title {
   color: rgb(166, 166, 166);
   font-size: 12px;
-  font-family: "Manrope", sans-serif;
+  font-family: var(--font-secondary);
   font-weight: 400;
 }
 
 .value {
   color: rgb(0, 0, 0);
   font-size: 30px;
-  font-weight: 700;
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-primary-bold);
 }
