@@ -7,6 +7,8 @@ import { getUser } from "./controllers/getUser.js";
 import { addTransaction } from "./controllers/addTransaction.js";
 import { indexCategories } from "./controllers/indexCategories.js";
 import { indexCurrency } from "./controllers/indexCurrency.js";
+import { authMiddleware } from "./auth/tokenAuth.js";
+import { logInUser } from "./controllers/logInUser.js";
 
 export const router = express.Router();
 
@@ -15,8 +17,8 @@ router.post("/register", signupUser);
 router.get("/categories", indexCategories);
 router.get("/test", getTest);
 router.get("/currency", indexCurrency);
-
+router.post("/auth/sign-in", logInUser);
 // Potrzeba authentication middleware
-router.get("/logout", logoutUser);
-router.get("/current", getUser);
-router.post("/transactions", addTransaction);
+router.get("/logout", authMiddleware, logoutUser);
+router.get("/current", authMiddleware, getUser);
+router.post("/transactions", authMiddleware, addTransaction);
