@@ -18,4 +18,4 @@ const currencySchema = new Schema(
   { versionKey: false }
 );
 
-export const currency = model("currency", currencySchema);
+export const Currency = model("currency", currencySchema);

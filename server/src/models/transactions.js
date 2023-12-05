@@ -4,13 +4,12 @@ const transactionSchema = new Schema(
   {
     type: {
       type: String,
-      enum: ["Income, Expense"],
+      enum: ["Income", "Expense"],
       required: [true, "Transaction type is required"],
     },
     category: {
       type: Schema.Types.ObjectId,
       ref: "category",
-      required: [true, "Category is required"],
     },
     value: {
       type: Number,
@@ -31,4 +30,4 @@ const transactionSchema = new Schema(
   { versionKey: false }
 );
 
-export const transactions = model("transactions", transactionSchema);
+export const Transactions = model("transactions", transactionSchema);
