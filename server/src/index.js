@@ -24,6 +24,35 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
+/* const options = {
+  definition: {
+    openapi: "3.1.0",
+    info: {
+      title: "Wallet-App Express API with Swagger",
+      version: "0.1.0",
+      description:
+        "This is a simple application made with Express and documented with Swagger",
+      license: {
+        name: "MIT",
+        url: "https://spdx.org/licenses/MIT.html",
+      },
+    },
+    servers: [
+      {
+        url: "http://localhost:5173",
+      },
+    ],
+  },
+  apis: ["./routes.js"],
+};
+
+const specs = swaggerJsdoc(options);
+app.use(
+  "/api-docs",
+  swaggerUi.serve,
+  swaggerUi.setup(specs)
+); */
+
 connection
   .then(() => {
     app.listen(5173, () => {
