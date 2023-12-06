@@ -80,16 +80,24 @@ function App() {
         )}
       </Routes>
       <ToastContainer />
+<<<<<<< Updated upstream
       {showLoginForm ? (
         <LoginForm onRegisterClick={handleRegisterClick} />
       ) : (
         <SignupForm onLoginClick={handleLoginClick} />
       )}
+=======
+      <Balance />
+      <LoginForm />
+      <ChartWrapper />
+      
+>>>>>>> Stashed changes
       <button className="exit-button" onClick={handleOpenModal}>
         EXIT
       </button>
       {isModalOpen && <ModalLoadOut onClose={handleCloseModal} />}
       <LoadSpinner loading={isLoading} />
+
     </>
   );
 }

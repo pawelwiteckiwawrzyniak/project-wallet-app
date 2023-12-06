@@ -1,0 +1,23 @@
+.chartWrapper {
+    display: flex;
+    flex-direction: row;
+    max-width: 800px;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .chart-container {
+    flex: 1;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+  
+  .chart {}
+  
+  .diagram {
+    flex: 1;
+  }
+  
