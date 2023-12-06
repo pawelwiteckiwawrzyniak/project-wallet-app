@@ -26,9 +26,7 @@ export const globalSlice = createSlice({
     isLoading: false,
   },
   reducers: {
-    setLoading: (state, action) => {
-      console.log("lmaooooo");
-   
+    setLoading: (state, action) => {   
       state.isLoading = action.payload;
     },
   },
