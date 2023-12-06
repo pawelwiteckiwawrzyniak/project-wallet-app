@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './LoadSpinner.module.css';
 
 export const LoadSpinner = ({ loading }) => {
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(true);
 
   useEffect(() => {
     setShowSpinner(loading);

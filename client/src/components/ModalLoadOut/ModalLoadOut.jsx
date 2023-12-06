@@ -9,7 +9,7 @@ import css from './ModalLoadOut.module.css';
 
 export const ModalLoadOut = ({ onClose }) => {
   const dispatch = useDispatch();
-  const [isLogoutLoading, setIsLogoutLoading] = useState(false);
+
   const isLoading = useSelector((state) => state.global.isLoading);
 
   const handleOverlayClick = (event) => {
@@ -34,7 +34,7 @@ export const ModalLoadOut = ({ onClose }) => {
   const handleLogout = async () => {
     try {
       dispatch(globalSlice.actions.setLoading(true)); 
-      setIsLogoutLoading(true);
+      
 
       const resultAction = await dispatch(logOut());
 
@@ -50,7 +50,7 @@ export const ModalLoadOut = ({ onClose }) => {
       toast.error('An error occurred during logout. Please try again.');
     } finally {
       dispatch(globalSlice.actions.setLoading(false)); 
-      setIsLogoutLoading(false);
+
     }
   };
 
@@ -73,7 +73,7 @@ export const ModalLoadOut = ({ onClose }) => {
             Yes
           </button>
         </div>
-        <LoadSpinner loading={isLoading || isLogoutLoading} />
+        <LoadSpinner loading={isLoading} />
       </div>
     </div>
   );
