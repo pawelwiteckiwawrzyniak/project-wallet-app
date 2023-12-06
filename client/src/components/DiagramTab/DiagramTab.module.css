@@ -1,0 +1,17 @@
+.diagramTab {
+    padding: 20px;
+
+    margin: 20px;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  

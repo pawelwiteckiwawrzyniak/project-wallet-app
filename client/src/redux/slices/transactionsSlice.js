@@ -48,7 +48,7 @@ const transactionsSlice = createSlice({
     state.error = null;
     state.transactions.push(action.payload);
   },
-  [addTransaction.rejected]: handlePending,
+  [addTransaction.rejected]: handleRejected,
 
   [deleteTransaction.pending]: handlePending,
   [deleteTransaction.fulfilled](state, action) {
@@ -58,7 +58,7 @@ const transactionsSlice = createSlice({
     );
     state.transactions.splice(index, 1);
   },
-  [deleteTransaction.rejected]: handlePending,
+  [deleteTransaction.rejected]: handleRejected,
 });
 
 export const transactionsReduser = transactionsSlice.reducer;
