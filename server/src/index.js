@@ -9,9 +9,30 @@ import swaggerUi from "swagger-ui-express";
 
 const connection = mongoose.connect(process.env.MONGO_DB);
 
-const app = express();
 const formatsLogger = "dev";
 
+const options = {
+  definition: {
+    openapi: "3.1.0",
+    info: {
+      title: "Wallet-App MERN with Swagger",
+      version: "1.0.0",
+      description:
+        "Wallet application made with MERN and documented with Swagger",
+    },
+    servers: [
+      {
+        url: "http://localhost:3000",
+      },
+    ],
+  },
+  apis: ["./routes.js"],
+};
+
+const specs = swaggerJsdoc(options);
+
+const app = express();
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 app.use(express.json());
 app.use(morgan(formatsLogger));
 app.use(cors());
@@ -24,39 +45,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: err.message });
 });
 
-/* const options = {
-  definition: {
-    openapi: "3.1.0",
-    info: {
-      title: "Wallet-App Express API with Swagger",
-      version: "0.1.0",
-      description:
-        "This is a simple application made with Express and documented with Swagger",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
-    },
-    servers: [
-      {
-        url: "http://localhost:5173",
-      },
-    ],
-  },
-  apis: ["./routes.js"],
-};
-
-const specs = swaggerJsdoc(options);
-app.use(
-  "/api-docs",
-  swaggerUi.serve,
-  swaggerUi.setup(specs)
-); */
-
 connection
   .then(() => {
-    app.listen(5173, () => {
-      console.log("Database connection successful, port 5173");
+    app.listen(3000, () => {
+      console.log("Database connection successful, port 3000");
     });
   })
   .catch((error) => {

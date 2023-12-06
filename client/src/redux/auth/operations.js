@@ -10,7 +10,7 @@ const clearAuthHeader = () => {
 };
 
 //Information about the format of data received from the backend is required. Endpoints are required.
-axios.defaults.baseURL = "http://localhost:5173/";
+axios.defaults.baseURL = "http://localhost:3000/";
 
 export const register = createAsyncThunk(
   "auth/register",
