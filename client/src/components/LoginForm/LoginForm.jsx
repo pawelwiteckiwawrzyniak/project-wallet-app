@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
+import { logIn } from "../../redux/auth/operations";
 
 const LoginForm = (props) => {
   const [error, setError] = useState("");
@@ -21,29 +22,8 @@ const LoginForm = (props) => {
       .required("Required"),
   });
 
-  const onSubmit = async (values) => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("user", JSON.stringify(data.user));
-        sessionStorage.setItem("isAuth", true);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: { token: data.token, user: data.user },
-        });
-        dispatch({ type: "SET_AUTH", payload: true });
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError(err.message);
-    }
+  const onSubmit = (values) => {
+    dispatch(logIn(values));
   };
 
   return (
@@ -53,47 +33,61 @@ const LoginForm = (props) => {
       onSubmit={onSubmit}
     >
       {({ errors, touched }) => (
-        <Form className={css.form}>
-          <h1>Wallet</h1>
-          <label htmlFor="email" className={css.label}>
-            Email:
-            <Field
-              type="email"
-              id="email"
-              placeholder="E-mail"
-              name="email"
-              required
+        <Form className={css.app}>
+          <div className={css.titleImage}>
+            <img
+              className={css.image}
+              src="../../images/desktop-image.jpg"
+              alt="desktop image"
             />
-            {errors.email && touched.email ? <div>{errors.email}</div> : null}
-          </label>
-          <label htmlFor="password">
-            Password:
-            <Field
-              type="password"
-              id="password"
-              placeholder="Password"
-              name="password"
-              minLength={6}
-              maxLength={12}
-              required
-            />
-            {errors.password && touched.password ? (
-              <div>{errors.password}</div>
-            ) : null}
-          </label>
-          <button className={css.loginButton} type="submit">
-            Login
-          </button>
+            <h2 className={css.finance}>Finance App</h2>
+          </div>
+          <div className={css.form}>
+            <h1 className={css.title}>Wallet</h1>
+            <div className={css.formField}>
+              <label htmlFor="email" className={css.label}>
+                <Field
+                  type="email"
+                  id="email"
+                  placeholder="E-mail"
+                  name="email"
+                  className={css.field}
+                  required
+                />
+                {errors.email && touched.email ? (
+                  <div className={css.error}>{errors.email}</div>
+                ) : null}
+              </label>
+              <label htmlFor="password">
+                <Field
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  name="password"
+                  minLength={6}
+                  maxLength={12}
+                  className={css.field}
+                  required
+                />
+                {errors.password && touched.password ? (
+                  <div className={css.error}>{errors.password}</div>
+                ) : null}
+              </label>
+            </div>
+            <button className={css.loginButton} type="submit">
+              LOG IN
+            </button>
 
-          <button
-            className={css.button}
-            type="button"
-            onClick={props.onRegisterClick}
-          >
-            Register
-          </button>
+            <button
+              className={css.button}
+              type="button"
+              onClick={props.onRegisterClick}
+            >
+              <span className={css.register}>REGISTER</span>
+            </button>
 
-          {error && <p>{error}</p>}
+            {error && <p>{error}</p>}
+          </div>
         </Form>
       )}
     </Formik>

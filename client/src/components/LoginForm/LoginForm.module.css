@@ -1,42 +1,176 @@
+.app {
+  display: flex;
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  @media screen and (min-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    background-image: url("https://cdn.pixabay.com/photo/2020/01/06/16/20/abstract-4745656_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  @media screen and (min-width: 1280px) {
+    flex-direction: row;
+    align-items: self-end;
+    justify-content: space-around;
+    background-image: url("https://cdn.pixabay.com/photo/2020/01/06/16/20/abstract-4745656_1280.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+}
+
 .form {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 15px;
-  width: 700px;
-  height: 400px;
-  border: 2px solid black;
+  margin: auto;
+  border-radius: var(--radius-modal-tablet-desktop);
+  border: 1px solid var(--color-border-bottom-btn-form);
+  background-color: var(--color-bg-secondary);
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    width: 320px;
+    height: 568px;
+  }
+  @media screen and (min-width: 768px) {
+    width: 533px;
+    height: 468px;
+
+    margin-bottom: 196px;
+  }
+  @media screen and (min-width: 1280px) {
+    width: 533px;
+    height: 468px;
+    margin-bottom: 116px;
+  }
+}
+
+.finance {
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
+  @media screen and (min-width: 1280px) {
+    display: flex;
+    font-family: var(--font-primary);
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 77px;
+  }
+}
+
+.image {
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    width: 260.26px;
+    height: 250px;
+  }
+  @media screen and (min-width: 1280px) {
+    width: 435.2px;
+    height: 419.5px;
+    margin-left: 76px;
+  }
+}
+
+.titleImage {
+  display: flex;
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 60px;
+  }
+  @media screen and (min-width: 1280px) {
+    flex-direction: column;
+    padding-top: 150px;
+  }
+}
+
+.label {
+  margin-bottom: 10px;
+}
+
+.field {
+  width: 300px;
+  height: 40px;
   border-radius: 5px;
+  margin: 10px;
+  color: var(--color-border-details-separator);
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    max-width: 250px;
+  }
+}
+
+.title {
+  font-family: var(--font-primary-bold);
+  margin-bottom: 60px;
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    margin-top: 113px;
+  }
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
 }
 
 .loginButton {
   cursor: pointer;
-  width: 130px;
-  height: 25px;
-  border-radius: 5px;
-  color: white;
-  background-color: rgb(15, 188, 130);
+  padding: 15px 70px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: var(--radius-btn-login);
+  color: var(--color-text-secondary);
+  background-color: var(--color-border-btn-active-hover);
 
   &:hover,
   &:focus {
     cursor: pointer;
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.25);
+  }
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    margin-bottom: 10px;
   }
 }
 
 .button {
   cursor: pointer;
-  width: 130px;
-  height: 25px;
-  border-radius: 5px;
-  color: black;
-  background-color: white;
-  border: 1px solid black;
+  padding: 15px 60px;
+  border-radius: var(--radius-btn-register);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-btn-cancel);
+  margin-top: 10px;
 
   &:hover,
   &:focus {
     cursor: pointer;
     box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.25);
   }
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    margin-bottom: 62px;
+  }
+  @media screen and (min-width: 768px) {
+    margin-bottom: 62px;
+  }
+}
+
+.register {
+  color: var(--color-border-btn-cancel);
+}
+
+.error {
+  color: red;
+  margin-top: 5px;
 }

@@ -4,6 +4,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import css from "./RegistrationForm.module.css";
 import { useDispatch } from "react-redux";
+import { register } from "../../redux/auth/operations";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -41,48 +42,23 @@ const SignupForm = (props) => {
   const getPasswordStrengthDescription = () => {
     switch (passwordStrength) {
       case 0:
-        return { strength: "", color: "" };
+        return { strength: "Too short to assess", color: "" };
       case 1:
-        return { strength: "Słabe", color: "red" };
+        return { strength: "Weak", color: "red" };
       case 2:
       case 3:
-        return { strength: "Dobre", color: "yellow" };
+        return { strength: "Good", color: "yellow" };
       case 4:
-        return { strength: "Silne", color: "green" };
+        return { strength: "Strong", color: "green" };
       default:
-        return { strength: "Słabe", color: "red" };
+        return { strength: "Weak", color: "red" };
     }
   };
 
   const passwordStrengthDescription = getPasswordStrengthDescription();
 
-  const handleSubmit = async (values) => {
-    setIsSubmitting(true);
-    setServerError("");
-
-    try {
-      const response = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-
-      if (response.ok) {
-        const { token, user } = await response.json();
-        dispatch(saveToken(token));
-        dispatch(saveUser(user));
-        dispatch(setAuth(true));
-      } else {
-        const { message } = await response.json();
-        setServerError(message);
-      }
-    } catch (error) {
-      setServerError("An unexpected error occured");
-    }
-
-    setIsSubmitting(false);
+  const handleSubmit = (values) => {
+    dispatch(register(values));
   };
 
   return (
@@ -97,78 +73,114 @@ const SignupForm = (props) => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched }) => (
-        <Form className={css.form}>
-          <h1>Wallet</h1>
-          <div>
-            <label htmlFor="email">E-mail</label>
-            <Field type="email" name="email" placeholder="E-mail" />
-            <ErrorMessage name="email" component="div" />
-          </div>
-
-          <div>
-            <label htmlFor="password">Password</label>
-            <Field
-              className={css.field}
-              type="password"
-              placeholder="Password"
-              name="password"
-              minLength={6}
-              maxLength={12}
-              required
-              value={password}
-              onChange={handlePasswordChange}
+        <Form className={css.app}>
+          <div className={css.titleImage}>
+            <img
+              className={css.image}
+              src="../../images/desktop-image.jpg"
+              alt="desktop image"
             />
-            <div style={{ color: passwordStrengthDescription.color }}>
-              Password Strength: {passwordStrengthDescription.strength}
+            <h2 className={css.finance}>Finance App</h2>
+          </div>
+          <div className={css.form}>
+            <h1 className={css.title}>Wallet</h1>
+            <div className={css.label}>
+              <label htmlFor="email">
+                <Field
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                  className={css.field}
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={css.error}
+                />
+              </label>
             </div>
-            <ErrorMessage name="password" component="div" />
+
+            <div className={css.label}>
+              <label htmlFor="password">
+                <Field
+                  className={css.field}
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  minLength={6}
+                  maxLength={12}
+                  required
+                  value={password}
+                  onChange={handlePasswordChange}
+                />
+              </label>
+              <div style={{ color: passwordStrengthDescription.color }}>
+                Password Strength: {passwordStrengthDescription.strength}
+              </div>
+              <ErrorMessage
+                name="password"
+                component="div"
+                className={css.error}
+              />
+            </div>
+
+            <div className={css.label}>
+              <label htmlFor="confirmPassword">
+                <Field
+                  className={css.field}
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                  minLength={6}
+                  maxLength={12}
+                  required
+                />
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="div"
+                  className={css.error}
+                />
+              </label>
+            </div>
+
+            <div className={css.label}>
+              <label htmlFor="name">
+                <Field
+                  className={css.field}
+                  type="text"
+                  name="name"
+                  placeholder="Name"
+                  minLength={6}
+                  maxLength={12}
+                  required
+                />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className={css.error}
+                />
+              </label>
+            </div>
+
+            <button
+              className={css.registerButton}
+              type="submit"
+              disabled={isSubmitting}
+            >
+              REGISTER
+            </button>
+
+            <button
+              className={css.button}
+              type="button"
+              disabled={isSubmitting}
+              onClick={props.onLoginClick}
+            >
+              <span className={css.login}>LOG IN</span>
+            </button>
+
+            {serverError && <div>{serverError}</div>}
           </div>
-
-          <div>
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <Field
-              type="password"
-              name="confirmPassword"
-              placeholder="Confrim Password"
-              minLength={6}
-              maxLength={12}
-              required
-            />
-
-            <ErrorMessage name="confirmPassword" component="div" />
-          </div>
-
-          <div>
-            <label htmlFor="name">Name</label>
-            <Field
-              type="text"
-              name="name"
-              placeholder="Name"
-              minLength={6}
-              maxLength={12}
-              required
-            />
-            <ErrorMessage name="name" component="div" />
-          </div>
-
-          <button
-            className={css.registerButton}
-            type="submit"
-            disabled={isSubmitting}
-          >
-            Register
-          </button>
-
-          <button
-            className={css.button}
-            type="button"
-            disabled={isSubmitting}
-            onClick={props.onLoginClick}
-          >
-            Login
-          </button>
-
-          {serverError && <div>{serverError}</div>}
         </Form>
       )}
     </Formik>
