@@ -7,11 +7,12 @@ export async function getUser(req, res, next) {
     if (!currentUser)
       return res.status(404).json({ description: "User does not exist" });
     return res.status(200).json({
-      description: "User exists",
-      id: currentUser._id,
-      username: currentUser.name,
-      email: currentUser.email,
-      balance: currentUser.balance,
+      user: {
+        id: currentUser._id,
+        name: currentUser.name,
+        email: currentUser.email,
+        balance: currentUser.balance,
+      },
     });
   } catch (error) {
     return res.status(400).json({ message: error.message });
