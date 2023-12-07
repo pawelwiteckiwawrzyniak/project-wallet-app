@@ -4,6 +4,7 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
 import { logIn } from "../../redux/auth/operations";
+import desktopImage from "../../images/desktopImage.jpg";
 
 const LoginForm = (props) => {
   const [error, setError] = useState("");
@@ -35,11 +36,7 @@ const LoginForm = (props) => {
       {({ errors, touched }) => (
         <Form className={css.app}>
           <div className={css.titleImage}>
-            <img
-              className={css.image}
-              src="../../images/desktop-image.jpg"
-              alt="desktop image"
-            />
+            <img className={css.image} src={desktopImage} alt="desktop image" />
             <h2 className={css.finance}>Finance App</h2>
           </div>
           <div className={css.form}>

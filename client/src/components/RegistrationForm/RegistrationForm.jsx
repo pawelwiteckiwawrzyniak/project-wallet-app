@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import css from "./RegistrationForm.module.css";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
+import desktopImage from "../../images/desktopImage.jpg";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -75,11 +76,7 @@ const SignupForm = (props) => {
       {({ errors, touched }) => (
         <Form className={css.app}>
           <div className={css.titleImage}>
-            <img
-              className={css.image}
-              src="../../images/desktop-image.jpg"
-              alt="desktop image"
-            />
+            <img className={css.image} src={desktopImage} alt="desktop image" />
             <h2 className={css.finance}>Finance App</h2>
           </div>
           <div className={css.form}>
