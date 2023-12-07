@@ -11,10 +11,11 @@ export async function deleteTransaction(req, res, next) {
     if (owner === requestedTransaction.owner.toString()) {
       const user = await User.findOne({ _id: owner });
       let newBalance = user.balance;
-      if (requestedTransaction.type === "Income")
+      if (requestedTransaction.type === "Income") {
         newBalance -= requestedTransaction.value;
-      else if (requestedTransaction.type === "Expense")
+      } else if (requestedTransaction.type === "Expense") {
         newBalance += requestedTransaction.value;
+      }
       await User.findByIdAndUpdate(owner, { balance: newBalance });
       await Transactions.findByIdAndDelete(transactionId);
       return res
