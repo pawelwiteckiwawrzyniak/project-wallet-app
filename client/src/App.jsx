@@ -13,6 +13,7 @@ import "./App.css";
 import { useAuth } from "./hooks/userAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { refreshUserTest } from "./redux/auth/operations";
+import { Currency } from "./components/Currency/Currency";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,7 @@ function App() {
               element={
                 <div>
                   <Balance />
+                  <Currency />
                   <ChartWrapper />
                 </div>
               }
