@@ -11,7 +11,7 @@ export async function signupUser(req, res, next) {
     const newUser = await User.create({ email, password, name });
     return res.status(201).json({
       user: {
-        username: newUser.name,
+        name: newUser.name,
         email: newUser.email,
         balance: newUser.balance,
       },
