@@ -15,6 +15,8 @@ import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { refreshUser } from "./redux/auth/operations";
 import { TestRegistrationForm } from "./components/TestForms/TestRegistrationForm";
 import { TestLoginForm } from "./components/TestForms/TestLoginForm";
+import { refreshUserTest } from "./redux/auth/operations";
+import { Currency } from "./components/Currency/Currency";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,6 +71,7 @@ function App() {
               element={
                 <div>
                   <Balance />
+                  <Currency />
                   <ChartWrapper />
                 </div>
               }
