@@ -3,7 +3,7 @@ import axios from "axios";
 
 //Information about the format of data received from the backend is required. Endpoints are required.
 
-const URLTRANSACTIONS = "http://localhost:5173/";
+const URLTRANSACTIONS = "http://localhost:3000/";
 
 export const fetchAllTransactions = createAsyncThunk(
   "transactions/fetchAllTransactions",
