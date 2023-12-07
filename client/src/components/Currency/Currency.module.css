@@ -58,8 +58,8 @@ td {
   border: 0px;
   border-radius: 50%;
   position: relative;
-  animation: down 3s infinite;
-  -webkit-animation: down 3s infinite;
+  animation: down 1.5s infinite;
+  -webkit-animation: down 1.5s infinite;
   &::before {
     content: "";
     position: absolute;
