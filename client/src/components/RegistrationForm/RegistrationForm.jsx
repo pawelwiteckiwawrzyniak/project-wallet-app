@@ -115,7 +115,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="password">
-                <img className={css.icon} src={css.icon} alt="lock" />
+                <img className={css.icon} src={lock} alt="lock" />
                 <Field
                   className={css.field}
                   type="password"

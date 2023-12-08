@@ -71,7 +71,6 @@ const LoginForm = (props) => {
                   <div className={css.error}>{errors.email}</div>
                 ) : null}
               </label>
-
               <label htmlFor="password" className={css.label}>
                 <img className={css.icon} src={lock} alt="lock" />
                 <Field
