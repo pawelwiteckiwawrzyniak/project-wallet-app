@@ -66,7 +66,7 @@ function App() {
         ) : isAuth ? (
           <Route path="/" element={<ProtectedRoute />}>
             {/* Add components below, which would be display for logged-in user.*/}
-            <Route
+      {/* <Route
               path="/"
               element={
                 <div>
@@ -81,18 +81,17 @@ function App() {
           <Route path="/" element={<div>No access. Register or login. </div>} />
         )}
       </Routes>
-
-      <ToastContainer />
+      <ToastContainer />  */}
       {showLoginForm ? (
         <LoginForm onRegisterClick={handleRegisterClick} />
       ) : (
         <SignupForm onLoginClick={handleLoginClick} />
       )}
-      <button className="exit-button" onClick={handleOpenModal}>
+      {/* <button className="exit-button" onClick={handleOpenModal}>
         EXIT
       </button>
       {isModalOpen && <ModalLoadOut onClose={handleCloseModal} />}
-      <LoadSpinner loading={isLoading} />
+      <LoadSpinner loading={isLoading} /> */}
     </>
   );
 }

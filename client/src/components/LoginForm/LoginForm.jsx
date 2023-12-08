@@ -3,6 +3,14 @@ import { useDispatch } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
+import { logIn } from "../../redux/auth/operations";
+import loginDesktop from "../../../src/assets/images/login/loginDesktop.png";
+import loginDesktop2x from "../../assets/images/login/loginDesktop@2x.png";
+import loginTablet from "../../assets/images/login/loginTablet.png";
+import loginTablet2x from "../../assets/images/login/loginTablet@2x.png";
+import wallet from "../../assets/icons/wallet.svg";
+import lock from "../../assets/icons/lock.svg";
+import email from "../../assets/icons/email.svg";
 
 const LoginForm = (props) => {
   const [error, setError] = useState("");
@@ -21,29 +29,8 @@ const LoginForm = (props) => {
       .required("Required"),
   });
 
-  const onSubmit = async (values) => {
-    try {
-      const response = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        sessionStorage.setItem("token", data.token);
-        sessionStorage.setItem("user", JSON.stringify(data.user));
-        sessionStorage.setItem("isAuth", true);
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: { token: data.token, user: data.user },
-        });
-        dispatch({ type: "SET_AUTH", payload: true });
-      } else {
-        setError(data.message);
-      }
-    } catch (err) {
-      setError(err.message);
-    }
+  const onSubmit = (values) => {
+    dispatch(logIn(values));
   };
 
   return (
@@ -53,47 +40,68 @@ const LoginForm = (props) => {
       onSubmit={onSubmit}
     >
       {({ errors, touched }) => (
-        <Form className={css.form}>
-          <h1>Wallet</h1>
-          <label htmlFor="email" className={css.label}>
-            Email:
-            <Field
-              type="email"
-              id="email"
-              placeholder="E-mail"
-              name="email"
-              required
+        <Form className={css.app}>
+          <div className={css.titleImage}>
+            <img
+              className={css.image}
+              src={loginDesktop}
+              srcSet={`${loginDesktop} 1x, ${loginDesktop2x} 2x, ${loginTablet} 1x, ${loginTablet2x} 2x`}
+              alt="desktop image"
             />
-            {errors.email && touched.email ? <div>{errors.email}</div> : null}
-          </label>
-          <label htmlFor="password">
-            Password:
-            <Field
-              type="password"
-              id="password"
-              placeholder="Password"
-              name="password"
-              minLength={6}
-              maxLength={12}
-              required
-            />
-            {errors.password && touched.password ? (
-              <div>{errors.password}</div>
-            ) : null}
-          </label>
-          <button className={css.loginButton} type="submit">
-            Login
-          </button>
+            <h2 className={css.finance}>Finance App</h2>
+          </div>
+          <div className={css.form}>
+            <div className={css.appTitle}>
+              <img src={wallet} alt="wallet" />
+              <h1 className={css.title}>Wallet</h1>
+            </div>
+            <div className={css.formField}>
+              <label htmlFor="email" className={css.label}>
+                <img className={css.icon} src={email} alt="email" />
+                <Field
+                  type="email"
+                  id="email"
+                  placeholder="E-mail"
+                  name="email"
+                  className={css.field}
+                  required
+                />
 
-          <button
-            className={css.button}
-            type="button"
-            onClick={props.onRegisterClick}
-          >
-            Register
-          </button>
+                {errors.email && touched.email ? (
+                  <div className={css.error}>{errors.email}</div>
+                ) : null}
+              </label>
+              <label htmlFor="password" className={css.label}>
+                <img className={css.icon} src={lock} alt="lock" />
+                <Field
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  name="password"
+                  minLength={6}
+                  maxLength={12}
+                  className={css.field}
+                  required
+                />
+                {errors.password && touched.password ? (
+                  <div className={css.error}>{errors.password}</div>
+                ) : null}
+              </label>
+            </div>
+            <button className={css.loginButton} type="submit">
+              LOG IN
+            </button>
 
-          {error && <p>{error}</p>}
+            <button
+              className={css.button}
+              type="button"
+              onClick={props.onRegisterClick}
+            >
+              <span className={css.register}>REGISTER</span>
+            </button>
+
+            {error && <p>{error}</p>}
+          </div>
         </Form>
       )}
     </Formik>
