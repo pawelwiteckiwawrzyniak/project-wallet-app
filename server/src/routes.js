@@ -10,6 +10,7 @@ import { logInUser } from "./controllers/logInUser.js";
 import { deleteTransaction } from "./controllers/deleteTransaction.js";
 import { updateTransaction } from "./controllers/updateTransaction.js";
 import { getTransaction } from "./controllers/getTransaction.js";
+import { getStatistics } from "./controllers/getStatistics.js";
 
 export const router = express.Router();
 
@@ -17,6 +18,7 @@ router.get("/categories", indexCategories);
 router.get("/currency", indexCurrency);
 router.get("/current", authMiddleware, getUser);
 router.get("/transactions", authMiddleware, getTransaction);
+router.get("/statistics", authMiddleware, getStatistics);
 
 router.post("/transactions", authMiddleware, addTransaction);
 router.post("/users/login", logInUser);
