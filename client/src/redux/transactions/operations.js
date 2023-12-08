@@ -55,3 +55,14 @@ export const deleteTransaction = createAsyncThunk(
     }
   }
 );
+
+export const editTransaction = createAsyncThunk(
+  "transactions/edit",
+  async (_, thunkAPI) => {
+    try {
+      console.log();
+    } catch (error) {
+      thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

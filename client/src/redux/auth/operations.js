@@ -9,21 +9,19 @@ const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = "";
 };
 
-//Information about the format of data received from the backend is required. Endpoints are required.
 axios.defaults.baseURL = "http://localhost:3000/";
 
+//checked
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
+      const responce = await axios.post("api/users/signup", credentials);
       //
-      const responce = await axios.post("/users/signup", credentials); //Endpoint is required.
+      // setAuthHeader(responce.data.token);
+      //It gives an error when refreshing the page after user registration because the token is not received from the server.
       //
-      console.log(responce);
-      //
-      setAuthHeader(responce.token);
-      //
-      return responce;
+      return responce.data;
       //
     } catch (e) {
       return thunkAPI.rejectWithValue(e.massege);
@@ -31,17 +29,17 @@ export const register = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the backend is required. Endpoints are required.
+//checked
 export const logIn = createAsyncThunk(
   "auth/logIn",
   async (credentials, thunkAPI) => {
     try {
       //
-      const responce = axios.post("/users/login", credentials); //Endpoint is required.
+      const responce = await axios.post("api/users/login", credentials); //Endpoint is required.
       //
-      setAuthHeader(responce.token);
+      setAuthHeader(responce.data.token);
       //
-      return responce;
+      return responce.data;
       //
     } catch (e) {
       return thunkAPI.rejectWithValue(e.massege);
@@ -49,13 +47,13 @@ export const logIn = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the backend is required. Endpoints are required.
+//checked
 export const logOut = createAsyncThunk(
   "auth/logOut",
   async (token, thunkAPI) => {
     try {
       //
-      await axios.post("user/logout", token); //Endpoint is required.
+      await axios.post("api/user/logout", token);
       //
       clearAuthHeader();
       //
@@ -65,9 +63,9 @@ export const logOut = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the backend is required. Endpoints are required.
+//checked
 export const refreshUser = createAsyncThunk(
-  "auth/refresh",
+  "auth/refreshUser",
   async (_, thunkAPI) => {
     const state = thunkAPI.getState();
     const persistedToken = state.auth.token;
@@ -78,22 +76,10 @@ export const refreshUser = createAsyncThunk(
       //
       setAuthHeader(persistedToken);
       //
-      const responce = await axios.get("/users/me"); //Endpoint is required.
+      const responce = await axios.get("api/current");
       //
-      return responce;
+      return responce.data;
       //
-    } catch (error) {
-      thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-
-//test function
-export const refreshUserTest = createAsyncThunk(
-  "auth/refresh",
-  async (_, thunkAPI) => {
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
     } catch (error) {
       thunkAPI.rejectWithValue(error.message);
     }
