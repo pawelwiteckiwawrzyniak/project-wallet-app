@@ -12,11 +12,15 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { useAuth } from "./hooks/userAuth";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import { refreshUser } from "./redux/auth/operations";
+import { TestRegistrationForm } from "./components/TestForms/TestRegistrationForm";
+import { TestLoginForm } from "./components/TestForms/TestLoginForm";
 import { refreshUserTest } from "./redux/auth/operations";
+import { Currency } from "./components/Currency/Currency";
 
 function App() {
   const dispatch = useDispatch();
-  const { isRefresh } = useAuth();
+  const { isRefresh, isAuth } = useAuth();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const isLoading = useSelector((state) => state.global.isLoading);
 
@@ -47,24 +51,19 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        //use test function
-        await dispatch(refreshUserTest());
-      } catch (error) {
-        console.error("Error refreshing user:", error);
-      }
-    };
-    fetchData();
+    dispatch(refreshUser());
   }, [dispatch]);
 
   return (
     <>
-      {/* <Routes>
+      {/* This is a test TestRegistrationForm*/}
+      <TestRegistrationForm />
+      <TestLoginForm />
+      <Routes>
         {isRefresh ? (
           //there should be a loader
           <Route />
-        ) : (
+        ) : isAuth ? (
           <Route path="/" element={<ProtectedRoute />}>
             {/* Add components below, which would be display for logged-in user.*/}
       {/* <Route
@@ -72,11 +71,14 @@ function App() {
               element={
                 <div>
                   <Balance />
+                  <Currency />
                   <ChartWrapper />
                 </div>
               }
             />
           </Route>
+        ) : (
+          <Route path="/" element={<div>No access. Register or login. </div>} />
         )}
       </Routes>
       <ToastContainer />  */}

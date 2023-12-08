@@ -9,7 +9,9 @@ export async function logInUser(req, res, next) {
       return res.status(401).json({ message: "Email or password is wrong" });
     const userPayload = {
       id: user._id,
+      name: user.name,
       email: user.email,
+      balance: user.balance,
     };
     const token = genToken(userPayload);
     await User.findOneAndUpdate({ email: user.email }, { token });

@@ -6,7 +6,6 @@ export async function updateCurrency(req, res, next) {
     const { data } = await axios.get(
       "http://api.nbp.pl/api/exchangerates/tables/C/"
     );
-    console.log(data);
     await Currency.deleteMany();
     const updatedData = data[0].rates;
     const updatedCurrencies = await Currency.insertMany(updatedData);
