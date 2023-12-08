@@ -8,17 +8,33 @@
   @media screen and (min-width: 768px) {
     flex-direction: column;
     justify-content: center;
-    background-image: url("../../images/background.jpg");
+    background-image: url("../../src/assets/images/bg-tablet/ellipse-up.png"),
+      url("../../assets/images/bg-tablet/ellipse-down@2x.png"),
+      url("../../assets/images/bg-tablet/ellipse-up.png"),
+      url("../../assets/images/bg-tablet/ellipse-up@2x.png");
+    background-position: left bottom, left bottom, right top, right top, 0 0;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 50% 50%;
+    background-color: #e5e5e5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    background-blend-mode: lighten;
   }
   @media screen and (min-width: 1280px) {
     flex-direction: row;
     align-items: self-end;
     justify-content: space-between;
-    background-image: url("../../images/background.jpg");
+    background-image: url("../../assets/images/bg-desktop/ellipse.png"),
+      url("../../assets/images/bg-desktop/ellipse@2x.png"),
+      url("../../assets/images/bg-desktop/ellipse-up-desktop.png"),
+      url("../../assets/images/bg-desktop/ellipse-up-desktop@2x.png");
+    background-position: left bottom, left bottom, right top, right top, 0 0;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: 50% 50%;
+    background-color: #e5e5e5;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    background-blend-mode: lighten;
   }
 }
 
@@ -50,6 +66,20 @@
     margin-bottom: 52px;
     margin-top: 52px;
   }
+}
+
+.appTitle {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .finance {
@@ -112,6 +142,9 @@
 
 .label {
   margin-bottom: 10px;
+  @media screen and (min-width: 1280px) {
+    position: relative;
+  }
 }
 
 .field {
@@ -119,6 +152,7 @@
   height: 40px;
   border-radius: 5px;
   margin: 10px;
+  text-align: inherit;
   color: var(--color-border-details-separator);
   @media screen and (min-width: 320px) and (max-width: 767px) {
     width: 250px;
@@ -127,6 +161,7 @@
 
 .title {
   font-family: var(--font-primary-bold);
+  text-shadow: 5px -1px 6px rgba(66, 68, 90, 1);
 }
 
 .formField {
@@ -159,7 +194,7 @@
   cursor: pointer;
   padding: 15px 80px;
   border-radius: var(--radius-btn-register);
-  color: var(--color-text-primary);
+  color: var(--color-text-btn-cancel);
   background-color: var(--color-bg-secondary);
   border: 1px solid var(--color-border-btn-cancel);
   margin-top: 10px;

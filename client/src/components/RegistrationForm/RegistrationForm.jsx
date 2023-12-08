@@ -5,7 +5,14 @@ import * as Yup from "yup";
 import css from "./RegistrationForm.module.css";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
-import desktopImage from "../../images/desktopImage.jpg";
+import registerDesktop from "../../../src/assets/images/registration/registerDesktop.png";
+import registerDesktop2x from "../../assets/images/registration/registerDesktop@2x.png";
+import registerTablet from "../../assets/images/registration/registerTablet.png";
+import registerTablet2x from "../../assets/images/registration/registerTablet@2x.png";
+import wallet from "../../assets/icons/wallet.svg";
+import lock from "../../assets/icons/lock.svg";
+import email from "../../assets/icons/email.svg";
+import name from "../../assets/icons/name.svg";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -76,12 +83,21 @@ const SignupForm = (props) => {
       {({ errors, touched }) => (
         <Form className={css.app}>
           <div className={css.titleImage}>
-            <img className={css.image} src={desktopImage} alt="desktop image" />
+            <img
+              className={css.image}
+              src={registerDesktop}
+              srcSet={`${registerDesktop} 1x, ${registerDesktop2x} 2x, ${registerTablet} 1x, ${registerTablet2x} 2x`}
+              alt="desktop image"
+            />
             <h2 className={css.finance}>Finance App</h2>
           </div>
           <div className={css.form}>
-            <h1 className={css.title}>Wallet</h1>
+            <div className={css.appTitle}>
+              <img src={wallet} alt="wallet" />
+              <h1 className={css.title}>Wallet</h1>
+            </div>
             <div className={css.label}>
+              <img className={css.icon} src={email} alt="email" />
               <label htmlFor="email">
                 <Field
                   type="email"
@@ -99,6 +115,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="password">
+                <img className={css.icon} src={css.icon} alt="lock" />
                 <Field
                   className={css.field}
                   type="password"
@@ -123,6 +140,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="confirmPassword">
+                <img className={css.icon} src={lock} alt="lock" />
                 <Field
                   className={css.field}
                   type="password"
@@ -142,6 +160,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="name">
+                <img className={css.icon} src={name} alt="name" />
                 <Field
                   className={css.field}
                   type="text"

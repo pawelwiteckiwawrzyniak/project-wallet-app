@@ -4,7 +4,13 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import css from "./LoginForm.module.css";
 import { logIn } from "../../redux/auth/operations";
-import desktopImage from "../../images/desktopImage.jpg";
+import loginDesktop from "../../../src/assets/images/login/loginDesktop.png";
+import loginDesktop2x from "../../assets/images/login/loginDesktop@2x.png";
+import loginTablet from "../../assets/images/login/loginTablet.png";
+import loginTablet2x from "../../assets/images/login/loginTablet@2x.png";
+import wallet from "../../assets/icons/wallet.svg";
+import lock from "../../assets/icons/lock.svg";
+import email from "../../assets/icons/email.svg";
 
 const LoginForm = (props) => {
   const [error, setError] = useState("");
@@ -36,13 +42,22 @@ const LoginForm = (props) => {
       {({ errors, touched }) => (
         <Form className={css.app}>
           <div className={css.titleImage}>
-            <img className={css.image} src={desktopImage} alt="desktop image" />
+            <img
+              className={css.image}
+              src={loginDesktop}
+              srcSet={`${loginDesktop} 1x, ${loginDesktop2x} 2x, ${loginTablet} 1x, ${loginTablet2x} 2x`}
+              alt="desktop image"
+            />
             <h2 className={css.finance}>Finance App</h2>
           </div>
           <div className={css.form}>
-            <h1 className={css.title}>Wallet</h1>
+            <div className={css.appTitle}>
+              <img src={wallet} alt="wallet" />
+              <h1 className={css.title}>Wallet</h1>
+            </div>
             <div className={css.formField}>
               <label htmlFor="email" className={css.label}>
+                <img className={css.icon} src={email} alt="email" />
                 <Field
                   type="email"
                   id="email"
@@ -51,11 +66,14 @@ const LoginForm = (props) => {
                   className={css.field}
                   required
                 />
+
                 {errors.email && touched.email ? (
                   <div className={css.error}>{errors.email}</div>
                 ) : null}
               </label>
-              <label htmlFor="password">
+
+              <label htmlFor="password" className={css.label}>
+                <img className={css.icon} src={lock} alt="lock" />
                 <Field
                   type="password"
                   id="password"
