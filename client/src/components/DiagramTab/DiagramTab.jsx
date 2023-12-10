@@ -9,13 +9,16 @@ const getCategoryColor = (category) => {
   return style.getPropertyValue(`--color-category-${category}`);
 };
 
-const DiagramTab = ({ onDateChange }) => {
+const DiagramTab = () => {
   const dispatch = useDispatch();
   const [filteredData, setFilteredData] = useState({
     filteredTransactions: [],
     sumExpenses: 0,
     sumIncome: 0,
   });
+
+  const [filterChanged, setFilterChanged] = useState(false);
+  const [dateChanged, setDateChanged] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllTransactions());
@@ -31,22 +34,30 @@ const DiagramTab = ({ onDateChange }) => {
       filteredData.sumIncome !== newFilteredData.sumIncome
     ) {
       setFilteredData(newFilteredData);
+      setFilterChanged(true);
+      setDateChanged(false);
     }
   };
 
   const handleDateChange = (newDate) => {
-    onDateChange(newDate);
+    setDateChanged(true);
+    setFilterChanged(false);
   };
 
   return (
-    <div className={css.diagramTab}>
-      <div className={css.filters}>
+    <div
+      className={`${css.diagramTab} ${filterChanged ? css.onFilterChange : ""} ${
+        dateChanged ? css.onDateChange : ""
+      }`}
+    >
+      <div className={css.filterContainer}>
         <MonthYearSelector
           transactionsData={transactionsData.transactions}
           onFilterChange={handleFilterChange}
           onDateChange={handleDateChange}
         />
       </div>
+
       <div className={css.tableArea}>
         <div className={css.tableHeader}>
           <div>Category</div>

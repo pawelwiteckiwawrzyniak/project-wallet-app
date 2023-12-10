@@ -1,5 +1,6 @@
 .chart {
-  max-width: 288px;
+  min-width: 50%;
+  max-width: 100%;
 }
 
 .chart-title {

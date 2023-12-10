@@ -1,6 +1,9 @@
 .diagramTab {
+  margin-top: 50px;
+  max-width: 100%;
   padding: 20px;
-  margin: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .title {
@@ -8,12 +11,9 @@
   margin-bottom: 10px;
 }
 
-.filters {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5%;
-  margin-bottom: 5%;
-}
+
+
+
 
 .tableArea {
   width: 100%;
@@ -26,7 +26,7 @@
 }
 
 .tableBody {
-  margin-top: 10px; 
+  margin-top: 10px;
 }
 
 .categoryRow {
@@ -41,7 +41,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 12px;
+  width: auto;
   height: 12px;
   border-radius: 2px;
 }
@@ -50,21 +50,22 @@
   text-align: right;
 }
 
-
-.chartWrapper {
-  display: flex;
-  max-width: 800px;
-  width: 100%;
-  margin: 0 auto;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.totalRow {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 10px;
 }
 
-.chart-container {
-  flex: 1;
-  background-color: #f2f2f2;
-  padding: 20px;
+.onFilterChange {
+  background-color: #e6f7ff; 
 }
+
+.onDateChange {
+  background-color: #ffe6e6; 
+}
+
+
 
