@@ -1,0 +1,14 @@
+
+
+.monthYearSelector {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+    align-items: center; 
+}
+  .selectContainer {
+    min-width: 105px;
+    max-width: 150px; 
+    margin-right: 10px;
+  }
+  

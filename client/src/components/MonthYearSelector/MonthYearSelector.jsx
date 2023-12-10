@@ -1,5 +1,7 @@
+// MonthYearSelector.js
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
+import styles from "./MonthYearSelector.module.css";
 
 const MonthYearSelector = ({ transactionsData, onFilterChange, onDateChange }) => {
   const [selectedMonth, setSelectedMonth] = useState(null);
@@ -10,17 +12,15 @@ const MonthYearSelector = ({ transactionsData, onFilterChange, onDateChange }) =
 
   useEffect(() => {
     const filterTransactions = () => {
-      const newFilteredTransactions = transactionsData.filter(
-        (transaction) => {
-          const transactionDate = new Date(transaction.date);
-          return (
-            selectedMonth &&
-            selectedYear &&
-            transactionDate.getMonth() + 1 === selectedMonth.value &&
-            transactionDate.getFullYear() === selectedYear.value
-          );
-        }
-      );
+      const newFilteredTransactions = transactionsData.filter((transaction) => {
+        const transactionDate = new Date(transaction.date);
+        return (
+          selectedMonth &&
+          selectedYear &&
+          transactionDate.getMonth() + 1 === selectedMonth.value &&
+          transactionDate.getFullYear() === selectedYear.value
+        );
+      });
       setFilteredTransactions(newFilteredTransactions);
     };
 
@@ -29,21 +29,11 @@ const MonthYearSelector = ({ transactionsData, onFilterChange, onDateChange }) =
 
   useEffect(() => {
     const calculateSums = () => {
-      const expenses = filteredTransactions.filter(
-        (transaction) => transaction.type === "-"
-      );
-      const income = filteredTransactions.filter(
-        (transaction) => transaction.type === "+"
-      );
+      const expenses = filteredTransactions.filter((transaction) => transaction.type === "-");
+      const income = filteredTransactions.filter((transaction) => transaction.type === "+");
 
-      const sumExpenses = expenses.reduce(
-        (sum, transaction) => sum + transaction.summ,
-        0
-      );
-      const sumIncome = income.reduce(
-        (sum, transaction) => sum + transaction.summ,
-        0
-      );
+      const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
+      const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
 
       setSumExpenses(sumExpenses);
       setSumIncome(sumIncome);
@@ -82,27 +72,31 @@ const MonthYearSelector = ({ transactionsData, onFilterChange, onDateChange }) =
   ];
 
   return (
-    <div className="month-year-selector">
-      <Select
-        options={monthsOptions}
-        placeholder="Select month"
-        isSearchable
-        value={selectedMonth}
-        onChange={(selectedOption) => {
-          setSelectedMonth(selectedOption);
-          onDateChange({ selectedMonth: selectedOption, selectedYear });
-        }}
-      />
-      <Select
-        options={yearsOptions}
-        placeholder="Select year"
-        isSearchable
-        value={selectedYear}
-        onChange={(selectedOption) => {
-          setSelectedYear(selectedOption);
-          onDateChange({ selectedMonth, selectedYear: selectedOption });
-        }}
-      />
+    <div className={styles.monthYearSelector}>
+      <div className={styles.selectContainer}>
+        <Select
+          options={monthsOptions}
+          placeholder="Select month"
+          isSearchable
+          value={selectedMonth}
+          onChange={(selectedOption) => {
+            setSelectedMonth(selectedOption);
+            onDateChange({ selectedMonth: selectedOption, selectedYear });
+          }}
+        />
+      </div>
+      <div className={styles.selectContainer}>
+        <Select
+          options={yearsOptions}
+          placeholder="Select year"
+          isSearchable
+          value={selectedYear}
+          onChange={(selectedOption) => {
+            setSelectedYear(selectedOption);
+            onDateChange({ selectedMonth, selectedYear: selectedOption });
+          }}
+        />
+      </div>
     </div>
   );
 };

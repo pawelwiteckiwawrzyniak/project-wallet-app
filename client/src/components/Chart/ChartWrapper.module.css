@@ -1,20 +1,22 @@
 .chartWrapper {
   display: flex;
-  flex-direction: row;
+  flex-wrap: wrap;
   max-width: 800px;
   margin: 0 auto;
   border: 1px solid #ccc;
   border-radius: 5px;
+  
   padding: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.chart-container {
+.chart-diagram-container {
+  display: flex;
   flex: 1;
-  background-color: #f2f2f2;
-  padding: 20px;
 }
 
+.chart-container,
 .diagram {
   flex: 1;
+  padding: 20px;
 }

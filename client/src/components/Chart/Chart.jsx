@@ -25,6 +25,25 @@ export const ChartModel = ({ selectedDate }) => {
   }, [dispatch]);
 
   useEffect(() => {
+    const handleResize = () => {
+      if (chartRef.current && chartRef.current.chartInstance) {
+      
+        chartRef.current.chartInstance.width = window.innerWidth;
+    
+        chartRef.current.chartInstance.resize();
+      }
+    };
+
+  
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      // Czyszczenie nasłuchiwania po odmontowaniu komponentu
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [dispatch, selectedDate, transactionsData]);
+
+  useEffect(() => {
     if (chartRef.current && selectedDate.selectedMonth && selectedDate.selectedYear) {
       const filteredTransactions = transactionsData.transactions.filter(
         (transaction) => {
@@ -54,15 +73,14 @@ export const ChartModel = ({ selectedDate }) => {
         chartRef.current.chartInstance.destroy();
       }
 
-     
       const ctx = chartRef.current.getContext("2d");
       const data = {
         labels: ['No Data'],
         datasets: [
           {
-            data: [1], 
-            backgroundColor: ['#dddddd'], 
-            borderColor: ['#dddddd'], 
+            data: [1],
+            backgroundColor: ['#dddddd'],
+            borderColor: ['#dddddd'],
             borderWidth: 1,
           },
         ],
@@ -75,9 +93,42 @@ export const ChartModel = ({ selectedDate }) => {
     }
   }, [dispatch, selectedDate, transactionsData]);
 
+  const updateChart = (filteredTransactions) => {
+    if (chartRef.current) {
+      if (chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.destroy();
+      }
+
+      // Ustawienie szerokości diagramu na 100%
+      const ctx = chartRef.current.getContext("2d");
+      ctx.canvas.style.width = '100%';
+
+      const data = {
+        labels: filteredTransactions.map((transaction) => transaction.category),
+        datasets: [
+          {
+            data: filteredTransactions.map((transaction) => transaction.summ),
+            backgroundColor: filteredTransactions.map((transaction) =>
+              getCategoryColor(transaction.category)
+            ),
+            borderColor: filteredTransactions.map((transaction) =>
+              getCategoryColor(transaction.category)
+            ),
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      chartRef.current.chartInstance = new Chart(ctx, {
+        type: "doughnut",
+        data,
+      });
+    }
+  };
+
   return (
-    <div>
-      <canvas ref={chartRef} />
+    <div style={{ width: '100%' }}>
+      <canvas ref={chartRef} style={{ width: '100%' }} />
     </div>
   );
 };

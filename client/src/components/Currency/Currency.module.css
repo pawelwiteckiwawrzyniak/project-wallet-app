@@ -30,7 +30,7 @@ th {
 }
 
 .currencies-wrapper {
-  width: 393px;
+  width: 100%;
   background-color: #4a56e2;
   overflow: auto;
   padding-top: 5px;
