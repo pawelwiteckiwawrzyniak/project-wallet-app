@@ -25,12 +25,17 @@ export const ChartModel = ({ selectedDate }) => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (chartRef.current && selectedDate.selectedMonth && selectedDate.selectedYear) {
+    if (
+      chartRef.current &&
+      selectedDate.selectedMonth &&
+      selectedDate.selectedYear
+    ) {
       const filteredTransactions = transactionsData.transactions.filter(
         (transaction) => {
           const transactionDate = new Date(transaction.date);
           return (
-            transactionDate.getMonth() + 1 === selectedDate.selectedMonth.value &&
+            transactionDate.getMonth() + 1 ===
+              selectedDate.selectedMonth.value &&
             transactionDate.getFullYear() === selectedDate.selectedYear.value
           );
         }
@@ -54,15 +59,14 @@ export const ChartModel = ({ selectedDate }) => {
         chartRef.current.chartInstance.destroy();
       }
 
-     
       const ctx = chartRef.current.getContext("2d");
       const data = {
-        labels: ['No Data'],
+        labels: ["No Data"],
         datasets: [
           {
-            data: [1], 
-            backgroundColor: ['#dddddd'], 
-            borderColor: ['#dddddd'], 
+            data: [1],
+            backgroundColor: ["#dddddd"],
+            borderColor: ["#dddddd"],
             borderWidth: 1,
           },
         ],

@@ -1,44 +1,44 @@
 import { Route, Routes } from "react-router-dom";
-/* import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux"; */
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Balance } from "./components/Balance/Balance";
 import "./App.css";
-/* import { useAuth } from "./hooks/userAuth"; */
-/* import { refreshUser } from "./redux/auth/operations"; */
+import { useAuth } from "./hooks/userAuth";
+import { refreshUser } from "./redux/auth/operations";
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
 import Currency from "./components/Currency/Currency";
 import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonAddTransaction";
-/* import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner"; */
-/* import LoginForm from "./components/LoginForm/LoginForm"; */
-/* import SignupForm from "./components/RegistrationForm/RegistrationForm"; */
+import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner";
+import LoginForm from "./components/LoginForm/LoginForm";
+import SignupForm from "./components/RegistrationForm/RegistrationForm";
 /* import CustomButton from "./components/CustomButton/CustomButton"; */
-/* import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute"; */
+import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 
 function App() {
-  /* const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { isRefresh, isAuth } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const isLoading = useSelector((state) => state.global.isLoading); */
+  /* const [isModalOpen, setIsModalOpen] = useState(false); */
+  const isLoading = useSelector((state) => state.global.isLoading);
 
-  /* const [showLoginForm, setShowLoginForm] = useState(true); */
+  const [showLoginForm, setShowLoginForm] = useState(true);
 
-  /* const handleLoginClick = () => {
+  const handleLoginClick = () => {
     setShowLoginForm(true);
-  }; */
+  };
 
-  /* const handleRegisterClick = () => {
+  const handleRegisterClick = () => {
     setShowLoginForm(false);
-  }; */
+  };
 
-  /* const handleOpenModal = () => {
+  const handleOpenModal = () => {
     setIsModalOpen(true);
-  }; */
+  };
 
-  /* const handleCloseModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
-  }; */
+  };
 
-  /* useEffect(() => {
+  useEffect(() => {
     dispatch({ type: "START_LOADING" });
 
     setTimeout(() => {
@@ -48,22 +48,41 @@ function App() {
 
   useEffect(() => {
     dispatch(refreshUser());
-  }, [dispatch]); */
+  }, [dispatch]);
 
   return (
     <>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              <Balance />
-              <Currency />
-              <ButtonAddTransaction />
-              <ChartWrapper />
-            </div>
-          }
-        />
+        {isLoading ? (
+          <Route path="/" element={<LoadSpinner loading={true} />} />
+        ) : isAuth ? (
+          <Route path="/" element={<ProtectedRoute />}>
+            {/* Add components below, which would be display for logged-in user.*/}
+            <Route
+              path="/"
+              element={
+                <div>
+                  <Balance />
+                  <Currency />
+                  <ChartWrapper />
+                </div>
+              }
+            />
+          </Route>
+        ) : (
+          <Route
+            path="/"
+            element={
+              <>
+                {showLoginForm ? (
+                  <LoginForm onRegisterClick={handleRegisterClick} />
+                ) : (
+                  <SignupForm onLoginClick={handleLoginClick} />
+                )}
+              </>
+            }
+          />
+        )}
       </Routes>
     </>
   );
