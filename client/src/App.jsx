@@ -7,7 +7,7 @@ import { useAuth } from "./hooks/userAuth";
 import { refreshUser } from "./redux/auth/operations";
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
 import Currency from "./components/Currency/Currency";
-import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonAddTransaction";
+/* import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonAddTransaction"; */
 import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/RegistrationForm/RegistrationForm";
@@ -30,13 +30,13 @@ function App() {
     setShowLoginForm(false);
   };
 
-  const handleOpenModal = () => {
+  /* const handleOpenModal = () => {
     setIsModalOpen(true);
-  };
+  }; */
 
-  const handleCloseModal = () => {
+  /* const handleCloseModal = () => {
     setIsModalOpen(false);
-  };
+  }; */
 
   useEffect(() => {
     dispatch({ type: "START_LOADING" });
