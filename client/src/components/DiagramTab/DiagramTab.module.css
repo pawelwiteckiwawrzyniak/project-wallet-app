@@ -1,17 +1,70 @@
 .diagramTab {
-    padding: 20px;
+  padding: 20px;
+  margin: 20px;
+}
 
-    margin: 20px;
-  }
-  
-  .title {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .filters {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
-  }
-  
+.title {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5%;
+  margin-bottom: 5%;
+}
+
+.tableArea {
+  width: 100%;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 8px;
+}
+
+.tableBody {
+  margin-top: 10px; 
+}
+
+.categoryRow {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.categoryColorSquare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+}
+
+.sumColumn {
+  text-align: right;
+}
+
+
+.chartWrapper {
+  display: flex;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.chart-container {
+  flex: 1;
+  background-color: #f2f2f2;
+  padding: 20px;
+}
+

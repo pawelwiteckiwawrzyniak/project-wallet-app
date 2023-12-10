@@ -1,9 +1,37 @@
-import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Doughnut } from "react-chartjs-2";
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-ChartJS.register(ArcElement, Tooltip);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://api.example.com/transactions");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        dispatch(transactionsReducer.actions.setTransactions(data));
+      } catch (error) {
+        console.error("Error fetching transactions:", error.message);
+        dispatch(transactionsReducer.actions.handleRejected(null, { payload: error.message }));
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  const transactionsData = useSelector((state) => state.transactions) || [];
+  const filteredTransactions = transactionsData.transactions || [];
+
+  const expenses = filteredTransactions.filter((transaction) => transaction.type === "-");
+  const income = filteredTransactions.filter((transaction) => transaction.type === "+");
+
+  const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
+  const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
+
+  const data = transactionsData.transactions.map((transaction) => transaction.summ);
+  const backgroundColors = transactionsData.transactions.map((transaction) => transaction.color);
 
 export const ChartModel = () => {
   const [expenses, setExpenses] = useState([]);
@@ -62,6 +90,7 @@ export const ChartModel = () => {
     <div>
       {expenses.length > 0 && <Doughnut data={chart} />}
       {expenses.length === 0 && <p>Loading expenses...</p>}
+
     </div>
   );
 };

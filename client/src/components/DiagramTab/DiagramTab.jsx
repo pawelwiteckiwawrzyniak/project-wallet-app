@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import Select from "react-select";
 import css from "./DiagramTab.module.css";
 import { useSelector } from "react-redux";
@@ -57,14 +57,8 @@ const DiagramTab = () => {
 
   const mergedTransactions = [...expenses, ...income];
 
-  const sumExpenses = expenses.reduce(
-    (sum, transaction) => sum + transaction.summ,
-    0
-  );
-  const sumIncome = income.reduce(
-    (sum, transaction) => sum + transaction.summ,
-    0
-  );
+  const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
+  const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
 
   return (
     <div className={css.diagramTab}>
@@ -85,35 +79,32 @@ const DiagramTab = () => {
         />
       </div>
       <div className={css.tableArea}>
-        <table>
-          <thead>
-            <tr>
-              <th>Category</th>
-              <th>Amount</th>
-            </tr>
-          </thead>
-          <tbody>
-            {mergedTransactions.map((transaction, index) => (
-              <tr key={index}>
-                <td>{transaction.category}</td>
-                <td>{transaction.summ}</td>
-              </tr>
-            ))}
-            <tr>
-              <td>Total Expenses:</td>
-              <td>{sumExpenses}</td>
-              <td></td>
-            </tr>
-            <tr>
-              <td>Total Income:</td>
-              <td>{sumIncome}</td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
+        <div className={css.tableHeader}>
+          <div>Category</div>
+          <div>SUM</div>
+        </div>
+        <div className={css.tableBody}>
+          {mergedTransactions.map((transaction, index) => (
+            <div key={index} className={css.categoryRow}>
+              <div
+                className={css.categoryColorSquare}
+                style={{ backgroundColor: transaction.color || '#808080' }}
+              ></div>
+              <div className={css.category}>{transaction.category}</div>
+              <div className={css.sumColumn}>{transaction.summ}</div>
+            </div>
+          ))}
+          <div className={css.totalRow}>
+            <div>Total Expenses:</div>
+            <div className={css.sumColumn}>{sumExpenses}</div>
+          </div>
+          <div className={css.totalRow}>
+            <div>Total Income:</div>
+            <div className={css.sumColumn}>{sumIncome}</div>
+          </div>
+        </div>
       </div>
     </div>
   );
 };
-
 export default DiagramTab;
