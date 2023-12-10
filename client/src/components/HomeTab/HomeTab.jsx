@@ -2,12 +2,12 @@
 import { useState } from "react";
 
 // components
-import Spinner from "components/Loader/Loader";
+import { LoadSpinner } from "../LoadSpinner/LoadSpinner";
 
 // styled components
 import { useDispatch, useSelector } from "react-redux";
-import financeSelectors from "redux/transactions/selectors";
-import financeOperations from "redux/finance/finance-operations";
+import financeSelectors from "../../redux/transactions/selectors.js";
+import financeOperations from "../../redux/finance/finance-operations.js";
 
 import {
   LineSide,
@@ -57,7 +57,7 @@ const HomeTab = () => {
     <Transactions>
       {LOADING && NO_TRANSACTIONS && (
         <InfoContainer>
-          <Spinner />
+          <LoadSpinner />
         </InfoContainer>
       )}
       {!LOADING && NO_TRANSACTIONS && (
@@ -138,7 +138,7 @@ const HomeTab = () => {
       )}
       {VIEW_BUTTON && LOADING && !NO_TRANSACTIONS && previousLoading && (
         <LoaderWrapper>
-          <Spinner />
+          <LoadSpinner />
         </LoaderWrapper>
       )}
       {VIEW_BUTTON && !LOADING && !previousLoading && (

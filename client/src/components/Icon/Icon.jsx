@@ -1,4 +1,4 @@
-import sprite from "assets/icons/sprite.svg";
+import sprite from "../../assets/icons/sprite.svg";
 // eslint-disable-next-line react/prop-types
 const Icon = ({ id, width, height, color }) => {
   return (
