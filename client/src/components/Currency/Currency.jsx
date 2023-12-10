@@ -30,9 +30,11 @@ export const Currency = () => {
       <div className={css["currencies-header"]}>
         <table>
           <thead>
-            <th>Currency</th>
-            <th>Purchase</th>
-            <th>Sale</th>
+            <tr>
+              <th>Currency</th>
+              <th>Purchase</th>
+              <th>Sale</th>
+            </tr>
           </thead>
         </table>
       </div>
