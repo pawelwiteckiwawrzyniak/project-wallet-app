@@ -1,35 +1,57 @@
-import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Doughnut } from "react-chartjs-2";
-
-ChartJS.register(ArcElement, Tooltip);
-
+import { transactionsReducer } from "../../redux/slices/transactionsSlice";
+import 'chart.js/auto';
 export const ChartModel = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://api.example.com/transactions");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+
+        const data = await response.json();
+        dispatch(transactionsReducer.actions.setTransactions(data));
+      } catch (error) {
+        console.error("Error fetching transactions:", error.message);
+        dispatch(transactionsReducer.actions.handleRejected(null, { payload: error.message }));
+      }
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  const transactionsData = useSelector((state) => state.transactions) || [];
+  const filteredTransactions = transactionsData.transactions || [];
+
+  const expenses = filteredTransactions.filter((transaction) => transaction.type === "-");
+  const income = filteredTransactions.filter((transaction) => transaction.type === "+");
+
+  const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
+  const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
+
+  const data = transactionsData.transactions.map((transaction) => transaction.summ);
+  const backgroundColors = transactionsData.transactions.map((transaction) => transaction.color);
+
   const chart = {
-    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+    labels: transactionsData.transactions.map((transaction) => transaction.category),
     datasets: [
       {
-        label: "expence title", //"label" to tytuł wydatku pobierany z tablicy która przechowuje dane wydatków
-        data: [12, 19, 3, 5, 2, 3], //"data" to będą zmienne pobierane z tablicy która będzie przechowywała dane z wydatków i implementowała do "data" jako wartości do wykresu
-        backgroundColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
-        borderColor: [
-          "rgba(255, 99, 132, 1)",
-          "rgba(54, 162, 235, 1)",
-          "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
-          "rgba(153, 102, 255, 1)",
-          "rgba(255, 159, 64, 1)",
-        ],
+        data,
+        backgroundColor: backgroundColors,
+        borderColor: backgroundColors,
         borderWidth: 1,
       },
     ],
   };
 
-  return <Doughnut data={chart} />;
+  return (
+    <div>
+      <Doughnut data={chart} />
+    </div>
+  );
 };

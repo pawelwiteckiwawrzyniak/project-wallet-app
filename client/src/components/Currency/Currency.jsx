@@ -16,7 +16,7 @@ export const Currency = () => {
 
         const data = await response.json();
         console.log("Currency data:", data[0].rates);
-        setCurrencyData(data[0].rates); // Poprawiono ustawienie danych
+        setCurrencyData(data[0].rates);
       } catch (error) {
         console.error("Error fetching currency data:", error.message);
       }
