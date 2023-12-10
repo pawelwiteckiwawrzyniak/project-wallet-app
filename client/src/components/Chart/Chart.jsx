@@ -1,137 +1,67 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllTransactions } from "../../redux/transactions/operations";
-import Chart from "chart.js/auto";
+import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const getCategoryColor = (category) => {
-  return getComputedStyle(document.documentElement).getPropertyValue(
-    `--color-category-${category}`
-  );
-};
+ChartJS.register(ArcElement, Tooltip);
 
-export const ChartModel = ({ selectedDate }) => {
-  const dispatch = useDispatch();
-  const transactionsData = useSelector((state) => state.transactions) || [];
-  const [filteredData, setFilteredData] = useState({
-    filteredTransactions: [],
-    sumExpenses: 0,
-    sumIncome: 0,
-  });
-
-  const chartRef = useRef(null);
+export const ChartModel = () => {
+  const [expenses, setExpenses] = useState([]);
+  const tokenRedux = useSelector((state) => state.auth.token);
 
   useEffect(() => {
-    dispatch(fetchAllTransactions());
-  }, [dispatch]);
+    const fetchExpenses = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/api/transactions", {
+          headers: {
+            Authorization: `Bearer ${tokenRedux}`,
+          },
+        });
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (chartRef.current && chartRef.current.chartInstance) {
-      
-        chartRef.current.chartInstance.width = window.innerWidth;
-    
-        chartRef.current.chartInstance.resize();
-      }
-    };
-
-  
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      // Czyszczenie nasłuchiwania po odmontowaniu komponentu
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [dispatch, selectedDate, transactionsData]);
-
-  useEffect(() => {
-    if (chartRef.current && selectedDate.selectedMonth && selectedDate.selectedYear) {
-
-      const filteredTransactions = transactionsData.transactions.filter(
-        (transaction) => {
-          const transactionDate = new Date(transaction.date);
-          return (
-            transactionDate.getMonth() + 1 ===
-              selectedDate.selectedMonth.value &&
-            transactionDate.getFullYear() === selectedDate.selectedYear.value
-          );
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
         }
-      );
 
-      setFilteredData({
-        filteredTransactions,
-        sumExpenses: 0,
-        sumIncome: 0,
-      });
-
-      updateChart(filteredTransactions);
-    } else {
-      setFilteredData({
-        filteredTransactions: [],
-        sumExpenses: 0,
-        sumIncome: 0,
-      });
-
-      if (chartRef.current && chartRef.current.chartInstance) {
-        chartRef.current.chartInstance.destroy();
+        const data = await response.json();
+        console.log("Expenses:", data.data);
+        setExpenses(data.data);
+      } catch (error) {
+        console.error("Error fetching expenses data:", error.message);
       }
+    };
 
-      const ctx = chartRef.current.getContext("2d");
-      const data = {
-        labels: ["No Data"],
-        datasets: [
-          {
-            data: [1],
-            backgroundColor: ["#dddddd"],
-            borderColor: ["#dddddd"],
+    fetchExpenses();
+  }, []);
 
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      chartRef.current.chartInstance = new Chart(ctx, {
-        type: "doughnut",
-        data,
-      });
-    }
-  }, [dispatch, selectedDate, transactionsData]);
-
-  const updateChart = (filteredTransactions) => {
-    if (chartRef.current) {
-      if (chartRef.current.chartInstance) {
-        chartRef.current.chartInstance.destroy();
-      }
-
-      // Ustawienie szerokości diagramu na 100%
-      const ctx = chartRef.current.getContext("2d");
-      ctx.canvas.style.width = '100%';
-
-      const data = {
-        labels: filteredTransactions.map((transaction) => transaction.category),
-        datasets: [
-          {
-            data: filteredTransactions.map((transaction) => transaction.summ),
-            backgroundColor: filteredTransactions.map((transaction) =>
-              getCategoryColor(transaction.category)
-            ),
-            borderColor: filteredTransactions.map((transaction) =>
-              getCategoryColor(transaction.category)
-            ),
-            borderWidth: 1,
-          },
-        ],
-      };
-
-      chartRef.current.chartInstance = new Chart(ctx, {
-        type: "doughnut",
-        data,
-      });
-    }
+  const generateChartData = () => {
+    return {
+      labels: expenses.map((expense) => expense.description),
+      datasets: [
+        {
+          label: "zł",
+          data: expenses.map((expense) => expense.value),
+          backgroundColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    };
   };
 
+  const chart = generateChartData();
+
   return (
-    <div style={{ width: '100%' }}>
-      <canvas ref={chartRef} style={{ width: '100%' }} />
+    <div>
+      {expenses.length > 0 && <Doughnut data={chart} />}
+      {expenses.length === 0 && <p>Loading expenses...</p>}
     </div>
   );
 };
