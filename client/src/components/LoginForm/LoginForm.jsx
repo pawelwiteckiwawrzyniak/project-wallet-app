@@ -11,6 +11,7 @@ import loginTablet2x from "../../assets/images/login/loginTablet@2x.png";
 import wallet from "../../assets/icons/wallet.svg";
 import lock from "../../assets/icons/lock.svg";
 import email from "../../assets/icons/email.svg";
+import PropTypes from "prop-types";
 
 const LoginForm = (props) => {
   const [error, setError] = useState("");
@@ -109,3 +110,7 @@ const LoginForm = (props) => {
 };
 
 export default LoginForm;
+
+LoginForm.propTypes = {
+  onRegisterClick: PropTypes.func,
+};

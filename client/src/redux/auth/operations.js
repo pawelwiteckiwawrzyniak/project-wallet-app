@@ -16,7 +16,8 @@ export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkAPI) => {
     try {
-      const responce = await axios.post("api/users/signup", credentials);
+      await axios.post("api/users/signup", credentials);
+      const responce = await axios.post("api/users/login", credentials);
       //
       // setAuthHeader(responce.data.token);
       //It gives an error when refreshing the page after user registration because the token is not received from the server.
