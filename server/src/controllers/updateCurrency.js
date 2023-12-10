@@ -1,19 +1,16 @@
 import axios from "axios";
 import { Currency } from "../models/currency.js";
 
-export async function updateCurrency(req, res, next) {
+export async function updateCurrencyJob(job) {
   try {
     const { data } = await axios.get(
       "http://api.nbp.pl/api/exchangerates/tables/C/"
     );
     await Currency.deleteMany();
     const updatedData = data[0].rates;
-    const updatedCurrencies = await Currency.insertMany(updatedData);
-    res.status(200).json({
-      description: "Updated currency database",
-      data: { updatedCurrencies },
-    });
+    await Currency.insertMany(updatedData);
+    console.log("Currency updated at ", new Date());
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return error;
   }
 }

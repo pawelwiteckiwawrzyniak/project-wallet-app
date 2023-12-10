@@ -6,10 +6,24 @@ import { router } from "./routes.js";
 import "dotenv/config";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import Agenda from "agenda";
+import { updateCurrencyJob } from "./controllers/updateCurrency.js";
 
 const connection = mongoose.connect(process.env.MONGO_DB);
-
+const agenda = new Agenda({ db: { address: process.env.MONGO_DB } });
 const formatsLogger = "dev";
+
+agenda.define("updateCurrency", async (job) => {
+  await updateCurrencyJob(job);
+});
+
+(async () => {
+  await agenda.start();
+  await agenda.every("00 12 * * *", "updateCurrency", null, {
+    timezone: "Europe/Warsaw",
+  });
+  console.log("Agenda job scheduled");
+})();
 
 const options = {
   definition: {
