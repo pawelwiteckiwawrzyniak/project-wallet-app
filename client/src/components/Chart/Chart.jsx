@@ -1,96 +1,87 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Doughnut } from "react-chartjs-2";
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllTransactions } from "../../redux/transactions/operations";
+import Chart from "chart.js/auto";
+
+const getCategoryColor = (category) => {
+  return getComputedStyle(document.documentElement).getPropertyValue(
+    `--color-category-${category}`
+  );
+};
+
+export const ChartModel = ({ selectedDate }) => {
+  const dispatch = useDispatch();
+  const transactionsData = useSelector((state) => state.transactions) || [];
+  const [filteredData, setFilteredData] = useState({
+    filteredTransactions: [],
+    sumExpenses: 0,
+    sumIncome: 0,
+  });
+
+  const chartRef = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://api.example.com/transactions");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        dispatch(transactionsReducer.actions.setTransactions(data));
-      } catch (error) {
-        console.error("Error fetching transactions:", error.message);
-        dispatch(transactionsReducer.actions.handleRejected(null, { payload: error.message }));
-      }
-    };
-
-    fetchData();
+    dispatch(fetchAllTransactions());
   }, [dispatch]);
 
-  const transactionsData = useSelector((state) => state.transactions) || [];
-  const filteredTransactions = transactionsData.transactions || [];
-
-  const expenses = filteredTransactions.filter((transaction) => transaction.type === "-");
-  const income = filteredTransactions.filter((transaction) => transaction.type === "+");
-
-  const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
-  const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
-
-  const data = transactionsData.transactions.map((transaction) => transaction.summ);
-  const backgroundColors = transactionsData.transactions.map((transaction) => transaction.color);
-
-export const ChartModel = () => {
-  const [expenses, setExpenses] = useState([]);
-  const tokenRedux = useSelector((state) => state.auth.token);
-
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/transactions", {
-          headers: {
-            Authorization: `Bearer ${tokenRedux}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    if (
+      chartRef.current &&
+      selectedDate.selectedMonth &&
+      selectedDate.selectedYear
+    ) {
+      const filteredTransactions = transactionsData.transactions.filter(
+        (transaction) => {
+          const transactionDate = new Date(transaction.date);
+          return (
+            transactionDate.getMonth() + 1 ===
+              selectedDate.selectedMonth.value &&
+            transactionDate.getFullYear() === selectedDate.selectedYear.value
+          );
         }
+      );
 
-        const data = await response.json();
-        console.log("Expenses:", data.data);
-        setExpenses(data.data);
-      } catch (error) {
-        console.error("Error fetching expenses data:", error.message);
+      setFilteredData({
+        filteredTransactions,
+        sumExpenses: 0,
+        sumIncome: 0,
+      });
+
+      updateChart(filteredTransactions);
+    } else {
+      setFilteredData({
+        filteredTransactions: [],
+        sumExpenses: 0,
+        sumIncome: 0,
+      });
+
+      if (chartRef.current && chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.destroy();
       }
-    };
 
-    fetchExpenses();
-  }, []);
+      const ctx = chartRef.current.getContext("2d");
+      const data = {
+        labels: ["No Data"],
+        datasets: [
+          {
+            data: [1],
+            backgroundColor: ["#dddddd"],
+            borderColor: ["#dddddd"],
+            borderWidth: 1,
+          },
+        ],
+      };
 
-  const generateChartData = () => {
-    return {
-      labels: expenses.map((expense) => expense.description),
-      datasets: [
-        {
-          label: "zł",
-          data: expenses.map((expense) => expense.value),
-          backgroundColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-  };
-
-  const chart = generateChartData();
+      chartRef.current.chartInstance = new Chart(ctx, {
+        type: "doughnut",
+        data,
+      });
+    }
+  }, [dispatch, selectedDate, transactionsData]);
 
   return (
     <div>
-      {expenses.length > 0 && <Doughnut data={chart} />}
-      {expenses.length === 0 && <p>Loading expenses...</p>}
-
+      <canvas ref={chartRef} />
     </div>
   );
 };
