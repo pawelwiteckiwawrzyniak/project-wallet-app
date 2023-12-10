@@ -60,5 +60,5 @@ const transactionsSlice = createSlice({
   },
   [deleteTransaction.rejected]: handleRejected,
 });
-
-export const transactionsReduser = transactionsSlice.reducer;
+export const { setTransactions } = transactionsSlice.actions;
+export const transactionsReducer = transactionsSlice.reducer;

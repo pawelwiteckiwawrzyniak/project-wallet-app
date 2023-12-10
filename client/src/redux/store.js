@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { authReducer } from "./slices/authSlice";
 import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
-import { transactionsReduser } from "./slices/transactionsSlice";
+import { transactionsReducer } from "./slices/transactionsSlice";
 import {
   FLUSH,
   PERSIST,
@@ -35,7 +35,7 @@ export const globalSlice = createSlice({
 export const store = configureStore({
   reducer: {
     auth: persistReducer(authPersistConfig, authReducer),
-    transactions: transactionsReduser,
+    transactions: transactionsReducer,
     global: globalSlice.reducer, 
   },
   middleware: (getDefaultMiddleware) =>
