@@ -53,29 +53,16 @@ export const ChartModel = ({ selectedDate }) => {
       if (chartRef.current && chartRef.current.chartInstance) {
         chartRef.current.chartInstance.destroy();
       }
-    }
-  }, [dispatch, selectedDate, transactionsData]);
 
-  const updateChart = (filteredTransactions) => {
-    if (chartRef.current) {
-      // Destroy the previous chart instance if it exists
-      if (chartRef.current.chartInstance) {
-        chartRef.current.chartInstance.destroy();
-      }
-
-      // Create the new chart instance
+     
       const ctx = chartRef.current.getContext("2d");
       const data = {
-        labels: filteredTransactions.map((transaction) => transaction.category),
+        labels: ['No Data'],
         datasets: [
           {
-            data: filteredTransactions.map((transaction) => transaction.summ),
-            backgroundColor: filteredTransactions.map((transaction) =>
-              getCategoryColor(transaction.category)
-            ),
-            borderColor: filteredTransactions.map((transaction) =>
-              getCategoryColor(transaction.category)
-            ),
+            data: [1], 
+            backgroundColor: ['#dddddd'], 
+            borderColor: ['#dddddd'], 
             borderWidth: 1,
           },
         ],
@@ -86,7 +73,7 @@ export const ChartModel = ({ selectedDate }) => {
         data,
       });
     }
-  };
+  }, [dispatch, selectedDate, transactionsData]);
 
   return (
     <div>
