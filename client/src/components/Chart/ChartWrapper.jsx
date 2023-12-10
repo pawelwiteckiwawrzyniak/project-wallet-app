@@ -1,8 +1,7 @@
 import { ChartModel } from "./Chart";
 import css from "./Chart.module.css";
-import  DiagramTab  from "../DiagramTab/DiagramTab";
-import WrapperCss from "./ChartWrapper.module.css"
-import React from 'react';
+import DiagramTab from "../DiagramTab/DiagramTab";
+import WrapperCss from "./ChartWrapper.module.css";
 
 export const ChartWrapper = () => {
   return (

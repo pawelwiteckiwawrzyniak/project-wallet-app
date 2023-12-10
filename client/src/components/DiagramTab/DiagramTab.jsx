@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Select from "react-select";
 import css from "./DiagramTab.module.css";
 import { useSelector } from "react-redux";
@@ -34,25 +34,37 @@ const DiagramTab = () => {
   const transactionsData = useSelector((state) => state.transactions) || [];
   const globalData = useSelector((state) => state.global);
 
+  const filteredTransactions = transactionsData.transactions.filter(
+    (transaction) => {
+      const transactionDate = new Date(transaction.data);
+      return (
+        (!selectedMonth ||
+          transactionDate.getMonth() ===
+            monthsOptions.findIndex(
+              (month) => month.value === selectedMonth.value
+            )) &&
+        (!selectedYear || transactionDate.getFullYear() === selectedYear.value)
+      );
+    }
+  );
 
-  const filteredTransactions = transactionsData.transactions.filter((transaction) => {
-    const transactionDate = new Date(transaction.data);
-    return (
-      (!selectedMonth || transactionDate.getMonth() === monthsOptions.findIndex((month) => month.value === selectedMonth.value)) &&
-      (!selectedYear || transactionDate.getFullYear() === selectedYear.value)
-    );
-  });
-
-  
-  const expenses = filteredTransactions.filter(transaction => transaction.type === "-");
-  const income = filteredTransactions.filter(transaction => transaction.type === "+");
-
+  const expenses = filteredTransactions.filter(
+    (transaction) => transaction.type === "-"
+  );
+  const income = filteredTransactions.filter(
+    (transaction) => transaction.type === "+"
+  );
 
   const mergedTransactions = [...expenses, ...income];
 
-
-  const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
-  const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
+  const sumExpenses = expenses.reduce(
+    (sum, transaction) => sum + transaction.summ,
+    0
+  );
+  const sumIncome = income.reduce(
+    (sum, transaction) => sum + transaction.summ,
+    0
+  );
 
   return (
     <div className={css.diagramTab}>

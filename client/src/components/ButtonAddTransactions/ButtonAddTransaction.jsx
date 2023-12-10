@@ -1,4 +1,5 @@
 import SvgIcon from "@mui/material/SvgIcon";
+import PropTypes from "prop-types";
 import css from "./ButtonAddTransaction.module.css";
 export const ButtonAddTransaction = ({ onClick }) => {
   return (
@@ -17,4 +18,8 @@ export const ButtonAddTransaction = ({ onClick }) => {
       </button>
     </>
   );
+};
+
+ButtonAddTransaction.propTypes = {
+  onClick: PropTypes.func,
 };
