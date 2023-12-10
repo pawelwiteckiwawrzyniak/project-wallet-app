@@ -12,6 +12,7 @@ import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonA
 /* import LoginForm from "./components/LoginForm/LoginForm"; */
 /* import SignupForm from "./components/RegistrationForm/RegistrationForm"; */
 /* import CustomButton from "./components/CustomButton/CustomButton"; */
+/* import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute"; */
 
 function App() {
   /* const dispatch = useDispatch();
