@@ -109,14 +109,16 @@ const ModalEditTransaction = ({ toggleModal }) => {
     toggleModal();
     dispatch(
       updateTransactionById({
-        id: transactionId,
+        // unecessary i think
+        // id: transactionId,
+        // year: year.toString(),
+        // month: month,
         date: new Date(formData.date),
-        year: year.toString(),
-        month: month,
         type: type,
         category: category,
-        comment: formData.comment ? formData.comment : "-",
-        sum: Number(formData.sum) ? formData.sum : "-",
+        // property name change to match server
+        description: formData.comment ? formData.comment : "-",
+        value: Number(formData.sum) ? formData.sum : "-",
       })
     );
   };
