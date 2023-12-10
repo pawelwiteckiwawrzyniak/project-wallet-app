@@ -13,6 +13,7 @@ import wallet from "../../assets/icons/wallet.svg";
 import lock from "../../assets/icons/lock.svg";
 import email from "../../assets/icons/email.svg";
 import name from "../../assets/icons/name.svg";
+import PropTypes from "prop-types";
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email address").required("Required"),
@@ -28,7 +29,7 @@ const SignupSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Passwords must be the same")
     .required("Required"),
   name: Yup.string()
-    .min(1, "The name must be at least 3 characters")
+    .min(3, "The name must be at least 3 characters")
     .max(12, "The name must be at most 12 characters")
     .required("Required"),
 });
@@ -37,12 +38,12 @@ const SignupForm = (props) => {
   const dispatch = useDispatch();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [serverError, setServerError] = useState("");
-  const [password, setPassword] = useState("");
+  /* const [password, setPassword] = useState(""); */
   const [passwordStrength, setPasswordStrength] = useState(0);
 
-  const handlePasswordChange = (event) => {
+  const handlePasswordChange = (event, setFieldValue) => {
     const newPassword = event.target.value;
-    setPassword(newPassword);
+    setFieldValue("password", newPassword);
     const result = zxcvbn(newPassword);
     setPasswordStrength(result.score);
   };
@@ -66,6 +67,7 @@ const SignupForm = (props) => {
   const passwordStrengthDescription = getPasswordStrengthDescription();
 
   const handleSubmit = (values) => {
+    console.log("Submitting form with values:", values);
     dispatch(register(values));
   };
 
@@ -80,7 +82,7 @@ const SignupForm = (props) => {
       validationSchema={SignupSchema}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, setFieldValue }) => (
         <Form className={css.app}>
           <div className={css.titleImage}>
             <img
@@ -105,11 +107,14 @@ const SignupForm = (props) => {
                   placeholder="E-mail"
                   className={css.field}
                 />
-                <ErrorMessage
+                {/* <ErrorMessage
                   name="email"
                   component="div"
                   className={css.error}
-                />
+                /> */}
+                {touched.email && errors.email && (
+                  <div className={css.error}>{errors.email}</div>
+                )}
               </label>
             </div>
 
@@ -121,21 +126,23 @@ const SignupForm = (props) => {
                   type="password"
                   placeholder="Password"
                   name="password"
-                  minLength={6}
-                  maxLength={12}
                   required
-                  value={password}
-                  onChange={handlePasswordChange}
+                  onChange={(event) => {
+                    handlePasswordChange(event, setFieldValue);
+                  }}
                 />
               </label>
               <div style={{ color: passwordStrengthDescription.color }}>
                 Password Strength: {passwordStrengthDescription.strength}
               </div>
-              <ErrorMessage
+              {/* <ErrorMessage
                 name="password"
                 component="div"
                 className={css.error}
-              />
+              /> */}
+              {touched.password && errors.password && (
+                <div className={css.error}>{errors.password}</div>
+              )}
             </div>
 
             <div className={css.label}>
@@ -146,42 +153,45 @@ const SignupForm = (props) => {
                   type="password"
                   name="confirmPassword"
                   placeholder="Confirm Password"
-                  minLength={6}
-                  maxLength={12}
                   required
                 />
-                <ErrorMessage
+                {/* <ErrorMessage
                   name="confirmPassword"
                   component="div"
                   className={css.error}
-                />
+                /> */}
+                {touched.confirmPassword && errors.confirmPassword && (
+                  <div className={css.error}>{errors.confirmPassword}</div>
+                )}
               </label>
             </div>
 
             <div className={css.label}>
               <label htmlFor="name">
-                <img className={css.icon} src={name} alt="name" />
+                <img className={css.icon} src={name} alt="nameField" />
                 <Field
                   className={css.field}
                   type="text"
                   name="name"
                   placeholder="Name"
-                  minLength={6}
-                  maxLength={12}
                   required
                 />
-                <ErrorMessage
+                {/* <ErrorMessage
                   name="name"
                   component="div"
                   className={css.error}
-                />
+                /> */}
+                {touched.name && errors.name && (
+                  <div className={css.error}>{errors.name}</div>
+                )}
               </label>
             </div>
 
             <button
               className={css.registerButton}
               type="submit"
-              disabled={isSubmitting}
+              /* disabled={isSubmitting} */
+              disabled={isSubmitting || Object.keys(errors).length > 0}
             >
               REGISTER
             </button>
@@ -204,3 +214,7 @@ const SignupForm = (props) => {
 };
 
 export default SignupForm;
+
+SignupForm.propTypes = {
+  onLoginClick: PropTypes.func,
+};
