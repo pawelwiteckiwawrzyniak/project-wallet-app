@@ -1,57 +1,96 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Doughnut } from "react-chartjs-2";
-import { transactionsReducer } from "../../redux/slices/transactionsSlice";
-import 'chart.js/auto';
-export const ChartModel = () => {
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllTransactions } from "../../redux/transactions/operations";
+import Chart from "chart.js/auto";
+
+const getCategoryColor = (category) => {
+  return getComputedStyle(document.documentElement).getPropertyValue(
+    `--color-category-${category}`
+  );
+};
+
+export const ChartModel = ({ selectedDate }) => {
   const dispatch = useDispatch();
+  const transactionsData = useSelector((state) => state.transactions) || [];
+  const [filteredData, setFilteredData] = useState({
+    filteredTransactions: [],
+    sumExpenses: 0,
+    sumIncome: 0,
+  });
+
+  const chartRef = useRef(null);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("http://api.example.com/transactions");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        dispatch(transactionsReducer.actions.setTransactions(data));
-      } catch (error) {
-        console.error("Error fetching transactions:", error.message);
-        dispatch(transactionsReducer.actions.handleRejected(null, { payload: error.message }));
-      }
-    };
-
-    fetchData();
+    dispatch(fetchAllTransactions());
   }, [dispatch]);
 
-  const transactionsData = useSelector((state) => state.transactions) || [];
-  const filteredTransactions = transactionsData.transactions || [];
+  useEffect(() => {
+    if (chartRef.current && selectedDate.selectedMonth && selectedDate.selectedYear) {
+      const filteredTransactions = transactionsData.transactions.filter(
+        (transaction) => {
+          const transactionDate = new Date(transaction.date);
+          return (
+            transactionDate.getMonth() + 1 === selectedDate.selectedMonth.value &&
+            transactionDate.getFullYear() === selectedDate.selectedYear.value
+          );
+        }
+      );
 
-  const expenses = filteredTransactions.filter((transaction) => transaction.type === "-");
-  const income = filteredTransactions.filter((transaction) => transaction.type === "+");
+      setFilteredData({
+        filteredTransactions,
+        sumExpenses: 0,
+        sumIncome: 0,
+      });
 
-  const sumExpenses = expenses.reduce((sum, transaction) => sum + transaction.summ, 0);
-  const sumIncome = income.reduce((sum, transaction) => sum + transaction.summ, 0);
+      updateChart(filteredTransactions);
+    } else {
+      setFilteredData({
+        filteredTransactions: [],
+        sumExpenses: 0,
+        sumIncome: 0,
+      });
 
-  const data = transactionsData.transactions.map((transaction) => transaction.summ);
-  const backgroundColors = transactionsData.transactions.map((transaction) => transaction.color);
+      if (chartRef.current && chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.destroy();
+      }
+    }
+  }, [dispatch, selectedDate, transactionsData]);
 
-  const chart = {
-    labels: transactionsData.transactions.map((transaction) => transaction.category),
-    datasets: [
-      {
+  const updateChart = (filteredTransactions) => {
+    if (chartRef.current) {
+      // Destroy the previous chart instance if it exists
+      if (chartRef.current.chartInstance) {
+        chartRef.current.chartInstance.destroy();
+      }
+
+      // Create the new chart instance
+      const ctx = chartRef.current.getContext("2d");
+      const data = {
+        labels: filteredTransactions.map((transaction) => transaction.category),
+        datasets: [
+          {
+            data: filteredTransactions.map((transaction) => transaction.summ),
+            backgroundColor: filteredTransactions.map((transaction) =>
+              getCategoryColor(transaction.category)
+            ),
+            borderColor: filteredTransactions.map((transaction) =>
+              getCategoryColor(transaction.category)
+            ),
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      chartRef.current.chartInstance = new Chart(ctx, {
+        type: "doughnut",
         data,
-        backgroundColor: backgroundColors,
-        borderColor: backgroundColors,
-        borderWidth: 1,
-      },
-    ],
+      });
+    }
   };
 
   return (
     <div>
-      <Doughnut data={chart} />
+      <canvas ref={chartRef} />
     </div>
   );
 };
