@@ -14,6 +14,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/RegistrationForm/RegistrationForm";
 /* import CustomButton from "./components/CustomButton/CustomButton"; */
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import { TestAddTransactionForm } from "./components/TestForms/TestAddTransactionForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ function App() {
                   <Balance />
                   <Currency />
                   <ChartWrapper />
+                  <TestAddTransactionForm />
                   <Table />
                 </div>
               }

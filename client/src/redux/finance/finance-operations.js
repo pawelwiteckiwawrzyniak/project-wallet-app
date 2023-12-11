@@ -1,10 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import {
-  dataForDiagramTable,
-  COLORS_ARRAY,
-  EXPENSE_ARRAY,
-} from "components/DiagramTab/js/initial-data";
+// import {
+//   dataForDiagramTable,
+//   COLORS_ARRAY,
+//   EXPENSE_ARRAY,
+// } from "components/DiagramTab/js/initial-data";
 
 const getCurrentTransactions = createAsyncThunk(
   "finance/transactions",
