@@ -6,16 +6,7 @@ import {
 } from "../transactions/operations";
 
 const initialState = {
-  transactions: [
-    {
-      data: "20.11.20",
-      type: "+",
-      category: "testCategory",
-      comment: "testComment",
-      summ: 300,
-      isRefreshing: false,
-    },
-  ],
+  transactions: [],
   isLoading: false,
   error: null,
 };
@@ -34,21 +25,22 @@ const transactionsSlice = createSlice({
   initialState,
   extraReducers: {
     [fetchAllTransactions.pending]: handlePending,
-  },
-  [fetchAllTransactions.fulfilled](state, action) {
-    state.isLoading = false;
-    state.error = null;
-    state.transactions = action.payload;
-  },
-  [fetchAllTransactions.rejected]: handleRejected,
 
-  [addTransaction.pending]: handlePending,
-  [addTransaction.fulfilled](state, action) {
-    state.isLoading = false;
-    state.error = null;
-    state.transactions.push(action.payload);
+    [fetchAllTransactions.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.transactions = action.payload;
+    },
+    [fetchAllTransactions.rejected]: handleRejected,
+
+    [addTransaction.pending]: handlePending,
+    [addTransaction.fulfilled](state, action) {
+      state.isLoading = false;
+      state.error = null;
+      state.transactions.push(action.payload);
+    },
+    [addTransaction.rejected]: handleRejected,
   },
-  [addTransaction.rejected]: handleRejected,
 
   [deleteTransaction.pending]: handlePending,
   [deleteTransaction.fulfilled](state, action) {

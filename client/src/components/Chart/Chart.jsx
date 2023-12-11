@@ -1,67 +1,54 @@
 import { Chart as ChartJS, ArcElement, Tooltip } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { fetchAllTransactions } from "../../redux/transactions/operations";
+import { useTransactions } from "../../hooks/userTransactions";
+// import { useSelector } from "react-redux";
 
 ChartJS.register(ArcElement, Tooltip);
 
 export const ChartModel = () => {
-  const [expenses, setExpenses] = useState([]);
-  const tokenRedux = useSelector((state) => state.auth.token);
+  const [chartData, setChartData] = useState({});
+  const { transactions } = useTransactions();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/transactions", {
-          headers: {
-            Authorization: `Bearer ${tokenRedux}`,
+    dispatch(fetchAllTransactions());
+  }, [dispatch]);
+
+  useEffect(() => {
+    const generateChartData = (transactions) => {
+      console.log("transactions", transactions);
+      return {
+        labels: transactions.map((transaction) => transaction.description),
+        datasets: [
+          {
+            label: "zł",
+            data: transactions.map((transaction) => transaction.value),
+            backgroundColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+            ],
+            borderColor: [
+              "rgba(255, 99, 132, 1)",
+              "rgba(54, 162, 235, 1)",
+              "rgba(255, 206, 86, 1)",
+            ],
+            borderWidth: 1,
           },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        console.log("Expenses:", data.data);
-        setExpenses(data.data);
-      } catch (error) {
-        console.error("Error fetching expenses data:", error.message);
-      }
+        ],
+      };
     };
 
-    fetchExpenses();
-  }, []);
-
-  const generateChartData = () => {
-    return {
-      labels: expenses.map((expense) => expense.description),
-      datasets: [
-        {
-          label: "zł",
-          data: expenses.map((expense) => expense.value),
-          backgroundColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-          ],
-          borderColor: [
-            "rgba(255, 99, 132, 1)",
-            "rgba(54, 162, 235, 1)",
-            "rgba(255, 206, 86, 1)",
-          ],
-          borderWidth: 1,
-        },
-      ],
-    };
-  };
-
-  const chart = generateChartData();
+    setChartData(generateChartData(transactions));
+  }, [transactions]);
 
   return (
     <div>
-      {expenses.length > 0 && <Doughnut data={chart} />}
-      {expenses.length === 0 && <p>Loading expenses...</p>}
+      {transactions.length > 0 && <Doughnut data={chartData} />}
+      {transactions.length === 0 && <p>Loading expenses...</p>}
     </div>
   );
 };

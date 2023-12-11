@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Switch,
   FormControlLabel,
@@ -18,7 +18,7 @@ import css from "./ModalAddTransaction.module.css";
 import plusbtn from "client/src/assets/icons/plusbtn.svg";
 import minusbtn from "client/src/assets/icons/minusbtn.svg";
 import vectorIcon from "client/src/assets/icons/vector.svg";
-import SelectIcon from "client/src/assets/icons/select-category.svg";
+// import SelectIcon from "client/src/assets/icons/select-category.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { addTransaction } from "../../redux/transactions/operations.js";
 import CustomButton from "../CustomButton/CustomButton.jsx";
