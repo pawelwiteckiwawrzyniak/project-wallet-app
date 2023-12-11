@@ -1,4 +1,4 @@
-// MonthYearSelector.js
+
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import styles from "./MonthYearSelector.module.css";
@@ -76,7 +76,7 @@ const MonthYearSelector = ({ transactionsData, onFilterChange, onDateChange }) =
       <div className={styles.selectContainer}>
         <Select
           options={monthsOptions}
-          placeholder="Select month"
+          placeholder="Month"
           isSearchable
           value={selectedMonth}
           onChange={(selectedOption) => {
@@ -88,7 +88,7 @@ const MonthYearSelector = ({ transactionsData, onFilterChange, onDateChange }) =
       <div className={styles.selectContainer}>
         <Select
           options={yearsOptions}
-          placeholder="Select year"
+          placeholder="Year"
           isSearchable
           value={selectedYear}
           onChange={(selectedOption) => {
