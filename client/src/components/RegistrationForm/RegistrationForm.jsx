@@ -10,9 +10,9 @@ import registerDesktop2x from "../../assets/images/registration/registerDesktop@
 import registerTablet from "../../assets/images/registration/registerTablet.png";
 import registerTablet2x from "../../assets/images/registration/registerTablet@2x.png";
 import wallet from "../../assets/icons/wallet.svg";
-import lock from "../../assets/icons/lock.svg";
-import email from "../../assets/icons/email.svg";
-import name from "../../assets/icons/name.svg";
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PropTypes from "prop-types";
 
 const SignupSchema = Yup.object().shape({
@@ -99,8 +99,8 @@ const SignupForm = (props) => {
               <h1 className={css.title}>Wallet</h1>
             </div>
             <div className={css.label}>
-              <img className={css.icon} src={email} alt="email" />
               <label htmlFor="email">
+                <EmailIcon className={css.icon} />
                 <Field
                   type="email"
                   name="email"
@@ -120,7 +120,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="password">
-                <img className={css.icon} src={lock} alt="lock" />
+                <LockIcon className={css.icon} />
                 <Field
                   className={css.field}
                   type="password"
@@ -147,7 +147,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="confirmPassword">
-                <img className={css.icon} src={lock} alt="lock" />
+                <LockIcon className={css.icon} />
                 <Field
                   className={css.field}
                   type="password"
@@ -168,7 +168,7 @@ const SignupForm = (props) => {
 
             <div className={css.label}>
               <label htmlFor="name">
-                <img className={css.icon} src={name} alt="nameField" />
+                <AccountCircleIcon className={css.icon} />
                 <Field
                   className={css.field}
                   type="text"

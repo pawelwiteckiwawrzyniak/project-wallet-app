@@ -75,11 +75,22 @@
 }
 
 .icon {
-  position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+  color: #e0e0e0;
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+  @media screen and (min-width: 768px) {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+  @media screen and (min-width: 1280px) {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
 }
 
 .finance {
@@ -141,10 +152,8 @@
 }
 
 .label {
+  position: relative;
   margin-bottom: 10px;
-  @media screen and (min-width: 1280px) {
-    position: relative;
-  }
 }
 
 .field {
@@ -162,6 +171,9 @@
 .title {
   font-family: var(--font-primary-bold);
   text-shadow: 5px -1px 6px rgba(66, 68, 90, 1);
+  @media screen and (min-width: 768px) {
+    margin-bottom: 18px;
+  }
 }
 
 .formField {
