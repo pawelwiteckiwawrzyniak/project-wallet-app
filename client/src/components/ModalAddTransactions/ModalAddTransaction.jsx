@@ -15,14 +15,14 @@ import * as Yup from "yup";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
 import css from "./ModalAddTransaction.module.css";
-import plusbtn from "client/src/assets/icons/plusbtn.svg";
-import minusbtn from "client/src/assets/icons/minusbtn.svg";
-import vectorIcon from "client/src/assets/icons/vector.svg";
-// import SelectIcon from "client/src/assets/icons/select-category.svg";
+import plusbtn from "../../assets/icons/plusbtn.svg";
+import minusbtn from "../../assets/icons/minusbtn.svg";
+import vectorIcon from "../../assets/icons/vector.svg";
+// import SelectIcon from "../../assets/icons/select-category.svg";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { addTransaction } from "../../redux/transactions/operations.js";
 import CustomButton from "../CustomButton/CustomButton.jsx";
-import closeIcon from "client/src/assets/icons/close.svg";
+import closeIcon from "../../assets/icons/close.svg";
 import { selectTransactionsCategories } from "../../redux/transactions/selectors.js";
 
 const ModalAddTransaction = ({ toggleModal }) => {
@@ -113,14 +113,9 @@ const ModalAddTransaction = ({ toggleModal }) => {
     toggleModal();
     const type = formData.isChecked ? "Income" : "Expense";
     const category = formData.isChecked ? "Income" : formData.selectedCategory;
-    const year = selectedDate.getFullYear();
-    const month = selectedDate.toLocaleString("en-US", { month: "long" });
     dispatch(
       addTransaction({
         date: new Date(selectedDate),
-        // unnecessary i think
-        // year: year.toString(),
-        // month: month,
         type: type,
         category: category,
         // property name change to match server
