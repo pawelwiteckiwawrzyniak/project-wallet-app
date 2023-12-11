@@ -6,6 +6,7 @@ import "./App.css";
 import { useAuth } from "./hooks/userAuth";
 import { refreshUser } from "./redux/auth/operations";
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
+import { Table } from "./components/Table/Table";
 import Currency from "./components/Currency/Currency";
 /* import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonAddTransaction"; */
 import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner";
@@ -65,6 +66,7 @@ function App() {
                   <Balance />
                   <Currency />
                   <ChartWrapper />
+                  <Table />
                 </div>
               }
             />
