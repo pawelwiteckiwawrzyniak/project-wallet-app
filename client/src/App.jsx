@@ -8,17 +8,19 @@ import { refreshUser } from "./redux/auth/operations";
 import { ChartWrapper } from "./components/Chart/ChartWrapper";
 import { Table } from "./components/Table/Table";
 import Currency from "./components/Currency/Currency";
-/* import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonAddTransaction"; */
+import { ButtonAddTransaction } from "./components/ButtonAddTransactions/ButtonAddTransaction";
 import { LoadSpinner } from "./components/LoadSpinner/LoadSpinner";
 import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/RegistrationForm/RegistrationForm";
-/* import CustomButton from "./components/CustomButton/CustomButton"; */
+import CustomButton from "./components/CustomButton/CustomButton";
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import ModalAddTransaction from "./components/ModalAddTransactions/ModalAddTransaction";
+import ModalEditTransaction from "./components/ModalEditTransactions/ModalEditTransaction";
 
 function App() {
   const dispatch = useDispatch();
   const { isRefresh, isAuth } = useAuth();
-  /* const [isModalOpen, setIsModalOpen] = useState(false); */
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const isLoading = useSelector((state) => state.global.isLoading);
 
   const [showLoginForm, setShowLoginForm] = useState(true);
@@ -31,13 +33,13 @@ function App() {
     setShowLoginForm(false);
   };
 
-  /* const handleOpenModal = () => {
+  const handleOpenModal = () => {
     setIsModalOpen(true);
-  }; */
+  };
 
-  /* const handleCloseModal = () => {
+  const handleCloseModal = () => {
     setIsModalOpen(false);
-  }; */
+  };
 
   useEffect(() => {
     dispatch({ type: "START_LOADING" });
