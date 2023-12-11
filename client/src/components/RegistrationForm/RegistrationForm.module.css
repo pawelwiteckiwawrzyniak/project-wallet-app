@@ -76,10 +76,9 @@
 
 .icon {
   position: absolute;
+  top: 22px;
   left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  pointer-events: none;
+  color: #e0e0e0;
 }
 
 .finance {
