@@ -1,36 +1,39 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//Information about the format of data received from the backend is required. Endpoints are required.
-
 const URLTRANSACTIONS = "http://localhost:3000/";
 
+//checked
 export const fetchAllTransactions = createAsyncThunk(
   "transactions/fetchAllTransactions",
   async (_, thunkAPI) => {
     try {
       //
-      const responce = await axios.get(`${URLTRANSACTIONS}/transactions`);
+      const responce = await axios.get(`${URLTRANSACTIONS}api/transactions`);
+      console.log("fetchAllTransactions", responce.data.data);
       //
-      return responce;
+      return responce.data.data;
       //
     } catch (e) {
       return thunkAPI.rejectWithValue(e.massege);
     }
   }
 );
-
-//Information about the format of data received from the form transaction is required.
+//checked
 export const addTransaction = createAsyncThunk(
   "transactions/addTransaction",
   async (transactionData, thunkApi) => {
     try {
+      console.log("transactionData", transactionData);
       //
-      const responce = await axios.post(`${URLTRANSACTIONS}/tasks`, {
-        transactionData,
-      });
+      const responce = await axios.post(
+        `${URLTRANSACTIONS}api/transactions`,
+        transactionData
+      );
       //
-      return responce;
+      console.log("addTransaction", responce.data);
+
+      return responce.data;
       //
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -45,7 +48,7 @@ export const deleteTransaction = createAsyncThunk(
     try {
       //
       const responce = await axios.delete(
-        `${URLTRANSACTIONS}/transactions/${transaction.id}`
+        `${URLTRANSACTIONS}transactions/${transaction.id}`
       );
       //
       return responce;

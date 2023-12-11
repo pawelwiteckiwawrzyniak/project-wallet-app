@@ -14,6 +14,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/RegistrationForm/RegistrationForm";
 /* import CustomButton from "./components/CustomButton/CustomButton"; */
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import { TestAddTransactionForm } from "./components/TestForms/TestAddTransactionForm";
 
 function App() {
   const dispatch = useDispatch();
@@ -62,11 +63,11 @@ function App() {
             <Route
               path="/"
               element={
-                <div>
+                <div className="container">
                   <Balance />
                   <Currency />
                   <ChartWrapper />
-                  <Table />
+                  <TestAddTransactionForm />
                 </div>
               }
             />
@@ -76,6 +77,7 @@ function App() {
             path="/"
             element={
               <>
+              
                 {showLoginForm ? (
                   <LoginForm onRegisterClick={handleRegisterClick} />
                 ) : (

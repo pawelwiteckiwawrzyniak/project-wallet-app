@@ -7,39 +7,19 @@ ChartJS.register(ArcElement, Tooltip);
 
 export const ChartModel = () => {
   const [expenses, setExpenses] = useState([]);
-  const tokenRedux = useSelector((state) => state.auth.token);
+  const expensesRedux = useSelector((state) => state.transactions.transactions);
 
   useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/transactions", {
-          headers: {
-            Authorization: `Bearer ${tokenRedux}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-
-        const data = await response.json();
-        console.log("Expenses:", data.data);
-        setExpenses(data.data);
-      } catch (error) {
-        console.error("Error fetching expenses data:", error.message);
-      }
-    };
-
-    fetchExpenses();
+    setExpenses(expensesRedux);
   }, []);
 
   const generateChartData = () => {
     return {
-      labels: expenses.map((expense) => expense.description),
+      labels: expenses.map((expense) => expense.comment),
       datasets: [
         {
           label: "zł",
-          data: expenses.map((expense) => expense.value),
+          data: expenses.map((expense) => expense.summ),
           backgroundColor: [
             "rgba(255, 99, 132, 1)",
             "rgba(54, 162, 235, 1)",
