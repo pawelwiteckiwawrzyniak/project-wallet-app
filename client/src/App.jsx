@@ -62,11 +62,13 @@ function App() {
             <Route
               path="/"
               element={
-                <div>
+                <div className="container">
+                  <div>
                   <Balance />
                   <Currency />
+                  </div>
                   <ChartWrapper />
-                  <Table />
+                  {/* <Table /> */}
                 </div>
               }
             />
@@ -76,6 +78,7 @@ function App() {
             path="/"
             element={
               <>
+              
                 {showLoginForm ? (
                   <LoginForm onRegisterClick={handleRegisterClick} />
                 ) : (
