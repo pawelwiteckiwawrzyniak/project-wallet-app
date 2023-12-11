@@ -71,10 +71,22 @@
 }
 
 .icon {
-  position: absolute;
-  top: 22px;
-  left: 20px;
   color: #e0e0e0;
+  @media screen and (min-width: 320px) and (max-width: 767px) {
+    position: absolute;
+    top: 22px;
+    left: 18px;
+  }
+  @media screen and (min-width: 768px) {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+  @media screen and (min-width: 1280px) {
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
 }
 
 .finance {
@@ -133,10 +145,8 @@
 }
 
 .label {
-  @media screen and (min-width: 1280px) {
-    position: relative;
-    margin-bottom: 10px;
-  }
+  position: relative;
+  margin-bottom: 10px;
 }
 
 .field {
@@ -147,11 +157,7 @@
   text-align: center;
   color: var(--color-border-details-separator);
   @media screen and (min-width: 320px) and (max-width: 767px) {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+    width: 250px;
   }
 }
 
@@ -160,7 +166,10 @@
   margin-bottom: 60px;
   text-shadow: 5px -1px 6px rgba(66, 68, 90, 1);
   @media screen and (min-width: 320px) and (max-width: 767px) {
-    margin-top: 113px;
+    margin-top: 68px;
+  }
+  @media screen and (min-width: 768px) {
+    margin-bottom: 20px;
   }
   @media screen and (min-width: 1280px) {
     margin-bottom: 20px;
