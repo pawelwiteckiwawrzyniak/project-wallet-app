@@ -64,20 +64,26 @@ const DiagramTab = () => {
           <div>SUM</div>
         </div>
         <div className={css.tableBody}>
-          {filteredData.filteredTransactions.map((transaction, index) => (
-            <div key={index} className={css.categoryRow}>
-              <div
-                className={css.categoryColorSquare}
-                style={{
-                  backgroundColor:
-                    transaction.color ||
-                    getCategoryColor(transaction.category),
-                }}
-              ></div>
-              <div className={css.category}>{transaction.category}</div>
-              <div className={css.sumColumn}>{transaction.summ}</div>
+          {filteredData.filteredTransactions.length > 0 ? (
+            filteredData.filteredTransactions.map((transaction) => (
+              <div key={transaction.id} className={css.categoryRow}>
+                <div
+                  className={css.categoryColorSquare}
+                  style={{
+                    backgroundColor:
+                      transaction.color ||
+                      getCategoryColor(transaction.category),
+                  }}
+                ></div>
+                <div className={css.category}>{transaction.category}</div>
+                <div className={css.sumColumn}>{transaction.summ}</div>
+              </div>
+            ))
+          ) : (
+            <div className={css.noTransactionsMessage}>
+              No transactions available.
             </div>
-          ))}
+          )}
           <div className={css.totalRow}>
             <div>Total Expenses:</div>
             <div className={css.sumColumn}>{filteredData.sumExpenses}</div>
