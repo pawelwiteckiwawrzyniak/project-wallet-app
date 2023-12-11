@@ -1,6 +1,12 @@
 #root {
+ 
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+.container {
+  display: flex;
+  justify-content: space-between; /* Ustawia odstępy między elementami, możesz dostosować według potrzeb */
+  align-items: center; /* Wyrównuje elementy do środka, możesz dostosować według potrzeb */
 }
