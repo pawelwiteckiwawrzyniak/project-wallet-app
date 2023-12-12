@@ -11,18 +11,9 @@ import ModalAddTransaction from "../../components/ModalAddTransactions/ModalAddT
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUser } from "../../redux/auth/operations";
-/**
- *
- *
- *
- */
-//nie wiem co to za plik ani co w nim jest
+
 import globalSelectors from "redux/global/global-selectors";
-/**
- *
- *
- *
- */
+
 import financeOperations from "../../redux/finance/finance-operations";
 import { toggleCurrencyView } from "../../redux/slices/global-slice";
 
@@ -36,18 +27,8 @@ import {
   InfoContainer,
   // Elips1,
 } from "./Dashboard.styled";
-/**
- *
- *
- *
- */
-//nie wiem co to za plik ani co w nim jest
-import financeSelectors from "redux/transactions/selectors";
-/**
- *
- *
- *
- */
+
+import financeSelectors from "redux/finance/finance-selectors";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
