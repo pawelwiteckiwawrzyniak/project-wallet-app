@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { fetchCategories } from "./categories.js";
+import { updateCategory } from "../../utils/formatCategory.js";
 
 const URLTRANSACTIONS = "http://localhost:3000/";
 
@@ -10,28 +12,27 @@ export const fetchAllTransactions = createAsyncThunk(
     try {
       //
       const responce = await axios.get(`${URLTRANSACTIONS}api/transactions`);
-      console.log("fetchAllTransactions", responce.data.data);
       //
-      return responce.data.data;
+      const categories = await fetchCategories();
+      return updateCategory(responce.data.data, categories);
       //
     } catch (e) {
       return thunkAPI.rejectWithValue(e.massege);
     }
   }
 );
+
 //checked
 export const addTransaction = createAsyncThunk(
   "transactions/addTransaction",
   async (transactionData, thunkApi) => {
     try {
-      console.log("transactionData", transactionData);
       //
       const responce = await axios.post(
         `${URLTRANSACTIONS}api/transactions`,
         transactionData
       );
       //
-      console.log("addTransaction", responce.data);
 
       return responce.data;
       //
@@ -41,17 +42,18 @@ export const addTransaction = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the backend is required. Endpoints are required.
+//checked.
 export const deleteTransaction = createAsyncThunk(
   "transactions/deleteTransaction",
-  async (transaction, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
       //
       const responce = await axios.delete(
-        `${URLTRANSACTIONS}transactions/${transaction.id}`
+        `${URLTRANSACTIONS}api/transactions/${id}`
       );
       //
-      return responce;
+      console.log("selete", responce.data);
+      return responce.data;
       //
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

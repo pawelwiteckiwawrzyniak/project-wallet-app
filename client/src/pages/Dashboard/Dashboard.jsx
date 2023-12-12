@@ -1,20 +1,20 @@
-
-import HomeTab from 'components/HomeTab/HomeTab';
-import Navigation from 'components/Navigation/Navigation';
-import Balance from 'components/Balance';
-import Currency from 'components/Currency/Currency';
-import Loader from 'components/Loader/Loader';
-import ButtonAddTransactions from 'components/ButtonAddTransactions/ButtonAddTransactions';
-import ModalTransactions from '../AddTransactions/ModalTransactions/ModalTransactions';
+import HomeTab from "../../components/HomeTab/HomeTab";
+import Navigation from "../../components/Navigation/Navigation";
+import { Balance } from "../../components/Balance/Balance";
+import Currency from "../../components/Currency/Currency";
+import { LoadSpinner } from "../../components/LoadSpinner/LoadSpinner";
+import { ButtonAddTransaction } from "../../components/ButtonAddTransactions/ButtonAddTransaction";
+import ModalAddTransaction from "../../components/ModalAddTransactions/ModalAddTransaction";
 // import Eli1 from 'images/Ellipse1.png'
 
 // redux/react
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { refresh } from 'redux/session/session-operations';
-import globalSelectors from 'redux/global/global-selectors';
-import financeOperations from 'redux/finance/finance-operations';
-import { toggleCurrencyView } from 'redux/slices/global-slice';
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { refreshUser } from "../../redux/auth/operations";
+
+import globalSelectors from "../../redux/global/global-selectors";
+
+import { toggleCurrencyView } from "../../redux/slices/global-slice";
 
 // import styled components
 import {
@@ -25,30 +25,47 @@ import {
   NavBalWrapper,
   InfoContainer,
   // Elips1,
-} from './Dashboard.styled';
-import financeSelectors from 'redux/finance/finance-selectors';
+} from "./Dashboard.styled";
+
+import { useAuth } from "../../hooks/userAuth";
+import { fetchAllTransactions } from "../../redux/transactions/operations";
+import { fetchCategories } from "../../redux/transactions/categories";
 
 export default function Dashboard() {
+  const { balance, isRefresh } = useAuth();
   const dispatch = useDispatch();
+
   const viewCurrency = useSelector(globalSelectors.getIsCurrencyView);
 
-  const isLoading = useSelector(globalSelectors.getIsLoading);
   const isModalAddTransactionOpen = useSelector(
     globalSelectors.getIsModalAddTransaction
   );
-
-  const balance = useSelector(financeSelectors.getTotalBalance);
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    dispatch(financeOperations.refreshTransactions());
-    dispatch(refresh());
+    const loadCategories = async () => {
+      const responce = await fetchCategories();
+      if (responce) {
+        setCategories(responce);
+      }
+    };
+    loadCategories();
+    // fetchCategories().then((responce) => {
+    //   const data = responce.json();
+    //   console.log("categories", data);
+    // });
+  }, []);
+
+  useEffect(() => {
+    dispatch(fetchAllTransactions());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(refresh());
+    dispatch(refreshUser());
   }, [dispatch, balance]);
 
-  window.addEventListener('resize', function () {
+  window.addEventListener("resize", function () {
     if (window.innerWidth >= 768) {
       dispatch(toggleCurrencyView(false));
     }
@@ -56,13 +73,13 @@ export default function Dashboard() {
 
   const VIEW_CURRENCY = viewCurrency === true;
   const VIEW_HOME = viewCurrency === false;
-  const LOADING = isLoading === true;
+  const LOADING = isRefresh === true;
 
   return (
     <DashboardContainer>
       {LOADING && (
         <InfoContainer>
-          <Loader />
+          <LoadSpinner />
         </InfoContainer>
       )}
 
@@ -81,7 +98,7 @@ export default function Dashboard() {
             </CurrencyWrapper>
           </HomeInfo>
           <HomeTab />
-          <ButtonAddTransactions />
+          <ButtonAddTransaction />
           {/* <Elips1 src={Eli1} /> */}
         </DashboardWrapper>
       )}
@@ -96,7 +113,7 @@ export default function Dashboard() {
         </DashboardWrapper>
       )}
 
-      {!LOADING && isModalAddTransactionOpen && <ModalTransactions />}
+      {!LOADING && isModalAddTransactionOpen && <ModalAddTransaction />}
     </DashboardContainer>
   );
 }

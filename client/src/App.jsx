@@ -17,6 +17,8 @@ import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
 import { TestAddTransactionForm } from "./components/TestForms/TestAddTransactionForm";
 import ModalAddTransaction from "./components/ModalAddTransactions/ModalAddTransaction";
 import ModalEditTransaction from "./components/ModalEditTransactions/ModalEditTransaction";
+import Footer from "./components/Footer/Footer";
+import Dashboard from "./pages/Dashboard/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -69,7 +71,9 @@ function App() {
                   <Balance />
                   <Currency />
                   <ChartWrapper />
-                  <TestAddTransactionForm />
+                  <Table />
+                  <Footer />
+                  <Dashboard />
                 </div>
               }
             />

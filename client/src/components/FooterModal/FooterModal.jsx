@@ -6,6 +6,7 @@ import {
   CloseIcon,
 } from "./FooterModal.styled";
 import TeamList from "../TeamList/TeamList";
+import { useEffect } from "react";
 
 // eslint-disable-next-line react/prop-types
 function FooterModal({ onClose }) {
