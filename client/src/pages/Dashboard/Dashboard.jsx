@@ -42,7 +42,7 @@ import {
  *
  */
 //nie wiem co to za plik ani co w nim jest
-import financeSelectors from "redux/finance/finance-selectors";
+import financeSelectors from "redux/transactions/selectors";
 /**
  *
  *
