@@ -46,9 +46,9 @@ const DiagramTab = () => {
 
   return (
     <div
-      className={`${css.diagramTab} ${filterChanged ? css.onFilterChange : ""} ${
-        dateChanged ? css.onDateChange : ""
-      }`}
+      className={`${css.diagramTab} ${
+        filterChanged ? css.onFilterChange : ""
+      } ${dateChanged ? css.onDateChange : ""}`}
     >
       <div className={css.filterContainer}>
         <MonthYearSelector

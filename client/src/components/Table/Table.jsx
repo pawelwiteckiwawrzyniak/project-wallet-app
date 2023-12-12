@@ -2,10 +2,30 @@ import { useDispatch } from "react-redux";
 import { useTransactions } from "../../hooks/userTransactions";
 import css from "./Table.module.css";
 import { deleteTransaction } from "../../redux/transactions/operations";
+import { useEffect } from "react";
+import { fetchCategories } from "../../redux/transactions/categories";
+import { formatDate } from "../../utils/formatDate.js";
 
 export const Table = () => {
   const distpatch = useDispatch();
   const { transactions } = useTransactions();
+
+  // // const [categories, setCategories] = useState([]);
+
+  // useEffect(() => {
+  //   const loadCategories = async () => {
+  //     const responce = await fetchCategories();
+  //     if (responce) {
+  //       setCategories(responce);
+  //     }
+  //   };
+  //   loadCategories();
+  //   // fetchCategories().then((responce) => {
+  //   //   const data = responce.json();
+  //   //   console.log("categories", data);
+  //   // });
+  // }, []);
+
   const handleDeleteContact = (id) => {
     console.log(id);
     distpatch(deleteTransaction(id));
@@ -27,11 +47,11 @@ export const Table = () => {
           {transactions.map((transaction) => {
             return (
               <tr key={transaction._id} className={css["table-body-row"]}>
-                <td>{transaction.data}</td>
+                <td>{formatDate(transaction.date)}</td>
                 <td>{transaction.type}</td>
                 <td>{transaction.category}</td>
-                <td>{transaction.comment}</td>
-                <td>{transaction.summ}</td>
+                <td>{transaction.description}</td>
+                <td>{transaction.value}</td>
                 <td>
                   <svg
                     className={css.svg}

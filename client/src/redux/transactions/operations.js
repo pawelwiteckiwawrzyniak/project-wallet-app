@@ -1,5 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { fetchCategories } from "./categories.js";
+import { updateCategory } from "../../utils/formatCategory.js";
 
 const URLTRANSACTIONS = "http://localhost:3000/";
 
@@ -11,7 +13,8 @@ export const fetchAllTransactions = createAsyncThunk(
       //
       const responce = await axios.get(`${URLTRANSACTIONS}api/transactions`);
       //
-      return responce.data.data;
+      const categories = await fetchCategories();
+      return updateCategory(responce.data.data, categories);
       //
     } catch (e) {
       return thunkAPI.rejectWithValue(e.massege);

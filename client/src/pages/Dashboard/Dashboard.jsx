@@ -8,7 +8,7 @@ import ModalAddTransaction from "../../components/ModalAddTransactions/ModalAddT
 // import Eli1 from 'images/Ellipse1.png'
 
 // redux/react
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUser } from "../../redux/auth/operations";
 
@@ -29,6 +29,7 @@ import {
 
 import { useAuth } from "../../hooks/userAuth";
 import { fetchAllTransactions } from "../../redux/transactions/operations";
+import { fetchCategories } from "../../redux/transactions/categories";
 
 export default function Dashboard() {
   const { balance, isRefresh } = useAuth();
@@ -36,12 +37,24 @@ export default function Dashboard() {
 
   const viewCurrency = useSelector(globalSelectors.getIsCurrencyView);
 
-  // const isRefresh = useSelector(globalSelectors.getIsLoading);
   const isModalAddTransactionOpen = useSelector(
     globalSelectors.getIsModalAddTransaction
   );
+  const [categories, setCategories] = useState([]);
 
-  // const balance = useSelector(financeSelectors.getTotalBalance);
+  useEffect(() => {
+    const loadCategories = async () => {
+      const responce = await fetchCategories();
+      if (responce) {
+        setCategories(responce);
+      }
+    };
+    loadCategories();
+    // fetchCategories().then((responce) => {
+    //   const data = responce.json();
+    //   console.log("categories", data);
+    // });
+  }, []);
 
   useEffect(() => {
     dispatch(fetchAllTransactions());
