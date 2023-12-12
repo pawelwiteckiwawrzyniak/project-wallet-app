@@ -1,8 +1,16 @@
+import { useDispatch } from "react-redux";
 import { useTransactions } from "../../hooks/userTransactions";
 import css from "./Table.module.css";
+import { deleteTransaction } from "../../redux/transactions/operations";
 
 export const Table = () => {
+  const distpatch = useDispatch();
   const { transactions } = useTransactions();
+  const handleDeleteContact = (id) => {
+    console.log(id);
+    distpatch(deleteTransaction(id));
+  };
+
   return (
     <div className={css.wrapper}>
       <table className={css.table}>
@@ -51,7 +59,13 @@ export const Table = () => {
                   </svg>
                 </td>
                 <td>
-                  <button className={css["delete-button"]}>Delete</button>
+                  <button
+                    className={css["delete-button"]}
+                    onClick={() => handleDeleteContact(transaction._id)}
+                    type="button"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );

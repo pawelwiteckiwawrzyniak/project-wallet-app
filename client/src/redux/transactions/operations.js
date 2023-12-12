@@ -42,14 +42,15 @@ export const addTransaction = createAsyncThunk(
 //Information about the format of data received from the backend is required. Endpoints are required.
 export const deleteTransaction = createAsyncThunk(
   "transactions/deleteTransaction",
-  async (transaction, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
       //
       const responce = await axios.delete(
-        `${URLTRANSACTIONS}transactions/${transaction.id}`
+        `${URLTRANSACTIONS}api/transactions/${id}`
       );
       //
-      return responce;
+      console.log("selete", responce.data);
+      return responce.data;
       //
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

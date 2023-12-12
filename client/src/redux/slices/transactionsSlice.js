@@ -40,17 +40,17 @@ const transactionsSlice = createSlice({
       state.transactions.push(action.payload);
     },
     [addTransaction.rejected]: handleRejected,
-  },
 
-  [deleteTransaction.pending]: handlePending,
-  [deleteTransaction.fulfilled](state, action) {
-    state.isLoading = false;
-    const index = state.transactions.findIndex(
-      (transaction) => transaction.id === action.payload.id
-    );
-    state.transactions.splice(index, 1);
+    [deleteTransaction.pending]: handlePending,
+    [deleteTransaction.fulfilled](state, action) {
+      state.isLoading = false;
+      const index = state.transactions.findIndex(
+        (transaction) => transaction.id === action.payload.id
+      );
+      state.transactions.splice(index, 1);
+    },
+    [deleteTransaction.rejected]: handleRejected,
   },
-  [deleteTransaction.rejected]: handleRejected,
 });
 export const { setTransactions } = transactionsSlice.actions;
 export const transactionsReducer = transactionsSlice.reducer;
