@@ -14,6 +14,7 @@ import LoginForm from "./components/LoginForm/LoginForm";
 import SignupForm from "./components/RegistrationForm/RegistrationForm";
 /* import CustomButton from "./components/CustomButton/CustomButton"; */
 import { ProtectedRoute } from "./components/ProtectedRoute/ProtectedRoute";
+import LogoutButton from "./components/ModalLoadOut/LogoutButton";
 
 function App() {
   const dispatch = useDispatch();
@@ -68,8 +69,8 @@ function App() {
                 <Currency /></div>
                <ChartWrapper />
                <div><TestAddTransactionForm /></div> 
+               <LogoutButton />
               </div>
-
               }
             />
           </Route>
