@@ -1,5 +1,6 @@
 import { Container, FooterText, HeartIcon, ModalBtn } from "./Footer.styled";
 import FooterModal from "../FooterModal/FooterModal";
+import { useState } from "react";
 
 function Footer() {
   // eslint-disable-next-line no-undef

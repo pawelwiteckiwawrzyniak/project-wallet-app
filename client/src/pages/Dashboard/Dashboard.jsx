@@ -1,20 +1,30 @@
-
-import HomeTab from 'components/HomeTab/HomeTab';
-import Navigation from 'components/Navigation/Navigation';
-import Balance from 'components/Balance';
-import Currency from 'components/Currency/Currency';
-import Loader from 'components/Loader/Loader';
-import ButtonAddTransactions from 'components/ButtonAddTransactions/ButtonAddTransactions';
-import ModalTransactions from '../AddTransactions/ModalTransactions/ModalTransactions';
+import HomeTab from "../../components/HomeTab/HomeTab";
+import Navigation from "../../components/Navigation/Navigation";
+import Balance from "../../components/Balance/Balance";
+import Currency from "../../components/Currency/Currency";
+import Loader from "../../components/LoadSpinner/LoadSpinner";
+import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransaction";
+import ModalAddTransaction from "../../components/ModalAddTransactions/ModalAddTransaction";
 // import Eli1 from 'images/Ellipse1.png'
 
 // redux/react
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { refresh } from 'redux/session/session-operations';
-import globalSelectors from 'redux/global/global-selectors';
-import financeOperations from 'redux/finance/finance-operations';
-import { toggleCurrencyView } from 'redux/slices/global-slice';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { refreshUser } from "../../redux/auth/operations";
+/**
+ *
+ *
+ *
+ */
+//nie wiem co to za plik ani co w nim jest
+import globalSelectors from "redux/global/global-selectors";
+/**
+ *
+ *
+ *
+ */
+import financeOperations from "../../redux/finance/finance-operations";
+import { toggleCurrencyView } from "../../redux/slices/global-slice";
 
 // import styled components
 import {
@@ -25,8 +35,19 @@ import {
   NavBalWrapper,
   InfoContainer,
   // Elips1,
-} from './Dashboard.styled';
-import financeSelectors from 'redux/finance/finance-selectors';
+} from "./Dashboard.styled";
+/**
+ *
+ *
+ *
+ */
+//nie wiem co to za plik ani co w nim jest
+import financeSelectors from "redux/finance/finance-selectors";
+/**
+ *
+ *
+ *
+ */
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -41,14 +62,14 @@ export default function Dashboard() {
 
   useEffect(() => {
     dispatch(financeOperations.refreshTransactions());
-    dispatch(refresh());
+    dispatch(refreshUser());
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(refresh());
+    dispatch(refreshUser());
   }, [dispatch, balance]);
 
-  window.addEventListener('resize', function () {
+  window.addEventListener("resize", function () {
     if (window.innerWidth >= 768) {
       dispatch(toggleCurrencyView(false));
     }
@@ -96,7 +117,7 @@ export default function Dashboard() {
         </DashboardWrapper>
       )}
 
-      {!LOADING && isModalAddTransactionOpen && <ModalTransactions />}
+      {!LOADING && isModalAddTransactionOpen && <ModalAddTransaction />}
     </DashboardContainer>
   );
 }
