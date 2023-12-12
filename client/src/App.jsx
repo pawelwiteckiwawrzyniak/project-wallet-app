@@ -73,7 +73,7 @@ function App() {
                   <ChartWrapper />
                   <Table />
                   <Footer />
-                  {/* <Dashboard /> */}
+                  <Dashboard />
                 </div>
               }
             />

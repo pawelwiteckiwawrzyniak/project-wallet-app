@@ -14,7 +14,6 @@ import { refreshUser } from "../../redux/auth/operations";
 
 import globalSelectors from "../../redux/global/global-selectors";
 
-import financeOperations from "../../redux/finance/finance-operations";
 import { toggleCurrencyView } from "../../redux/slices/global-slice";
 
 // import styled components
@@ -28,21 +27,24 @@ import {
   // Elips1,
 } from "./Dashboard.styled";
 
-import financeSelectors from "../../redux/finance/finance-selectors";
+import { useAuth } from "../../hooks/userAuth";
+import { fetchAllTransactions } from "../../redux/transactions/operations";
 
 export default function Dashboard() {
+  const { balance, isRefresh } = useAuth();
   const dispatch = useDispatch();
+
   const viewCurrency = useSelector(globalSelectors.getIsCurrencyView);
 
-  const isLoading = useSelector(globalSelectors.getIsLoading);
+  // const isRefresh = useSelector(globalSelectors.getIsLoading);
   const isModalAddTransactionOpen = useSelector(
     globalSelectors.getIsModalAddTransaction
   );
 
-  const balance = useSelector(financeSelectors.getTotalBalance);
+  // const balance = useSelector(financeSelectors.getTotalBalance);
 
   useEffect(() => {
-    dispatch(financeOperations.refreshTransactions());
+    dispatch(fetchAllTransactions());
     dispatch(refreshUser());
   }, [dispatch]);
 
@@ -58,7 +60,7 @@ export default function Dashboard() {
 
   const VIEW_CURRENCY = viewCurrency === true;
   const VIEW_HOME = viewCurrency === false;
-  const LOADING = isLoading === true;
+  const LOADING = isRefresh === true;
 
   return (
     <DashboardContainer>

@@ -10,7 +10,6 @@ export const fetchAllTransactions = createAsyncThunk(
     try {
       //
       const responce = await axios.get(`${URLTRANSACTIONS}api/transactions`);
-      console.log("fetchAllTransactions", responce.data.data);
       //
       return responce.data.data;
       //
@@ -19,19 +18,18 @@ export const fetchAllTransactions = createAsyncThunk(
     }
   }
 );
+
 //checked
 export const addTransaction = createAsyncThunk(
   "transactions/addTransaction",
   async (transactionData, thunkApi) => {
     try {
-      console.log("transactionData", transactionData);
       //
       const responce = await axios.post(
         `${URLTRANSACTIONS}api/transactions`,
         transactionData
       );
       //
-      console.log("addTransaction", responce.data);
 
       return responce.data;
       //
