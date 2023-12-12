@@ -1,9 +1,9 @@
 import HomeTab from "../../components/HomeTab/HomeTab";
 import Navigation from "../../components/Navigation/Navigation";
-import Balance from "../../components/Balance/Balance";
+import { Balance } from "../../components/Balance/Balance";
 import Currency from "../../components/Currency/Currency";
-import Loader from "../../components/LoadSpinner/LoadSpinner";
-import ButtonAddTransactions from "../../components/ButtonAddTransactions/ButtonAddTransaction";
+import { LoadSpinner } from "../../components/LoadSpinner/LoadSpinner";
+import { ButtonAddTransaction } from "../../components/ButtonAddTransactions/ButtonAddTransaction";
 import ModalAddTransaction from "../../components/ModalAddTransactions/ModalAddTransaction";
 // import Eli1 from 'images/Ellipse1.png'
 
@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { refreshUser } from "../../redux/auth/operations";
 
-import globalSelectors from "redux/global/global-selectors";
+import globalSelectors from "../../redux/global/global-selectors";
 
 import financeOperations from "../../redux/finance/finance-operations";
 import { toggleCurrencyView } from "../../redux/slices/global-slice";
@@ -28,7 +28,7 @@ import {
   // Elips1,
 } from "./Dashboard.styled";
 
-import financeSelectors from "redux/finance/finance-selectors";
+import financeSelectors from "../../redux/finance/finance-selectors";
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -64,7 +64,7 @@ export default function Dashboard() {
     <DashboardContainer>
       {LOADING && (
         <InfoContainer>
-          <Loader />
+          <LoadSpinner />
         </InfoContainer>
       )}
 
@@ -83,7 +83,7 @@ export default function Dashboard() {
             </CurrencyWrapper>
           </HomeInfo>
           <HomeTab />
-          <ButtonAddTransactions />
+          <ButtonAddTransaction />
           {/* <Elips1 src={Eli1} /> */}
         </DashboardWrapper>
       )}
