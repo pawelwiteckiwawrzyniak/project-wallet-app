@@ -62,12 +62,14 @@ function App() {
             <Route
               path="/"
               element={
-                <div>
-                  <Balance />
-                  <Currency />
-                  <ChartWrapper />
-                  <Table />
-                </div>
+
+                <div className="container">
+                <div><Balance />
+                <Currency /></div>
+               <ChartWrapper />
+               <div><TestAddTransactionForm /></div> 
+              </div>
+
               }
             />
           </Route>
