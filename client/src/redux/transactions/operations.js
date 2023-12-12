@@ -39,7 +39,7 @@ export const addTransaction = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the backend is required. Endpoints are required.
+//checked.
 export const deleteTransaction = createAsyncThunk(
   "transactions/deleteTransaction",
   async (id, thunkAPI) => {
