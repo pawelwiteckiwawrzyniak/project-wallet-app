@@ -2,7 +2,7 @@
 
 .monthYearSelector {
     display: flex;
-    flex-wrap: wrap;
+    margin-bottom: 5px;
     justify-content: center; 
     align-items: center; 
 }
