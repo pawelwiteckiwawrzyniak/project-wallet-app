@@ -2,8 +2,8 @@
 
 import Media from "react-media";
 import { useDispatch } from "react-redux";
-import { toggleCurrencyView } from "redux/slices/global-slice";
-import Icon from "components/Icon/Icon";
+import { toggleCurrencyView } from "../../redux/slices/global-slice";
+import Icon from "../Icon/Icon";
 
 // styled-components
 import {

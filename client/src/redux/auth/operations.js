@@ -1,7 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const setAuthHeader = (token) => {
+export const setAuthHeader = (token) => {
   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
 
@@ -36,10 +36,11 @@ export const logIn = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       //
-      const responce = await axios.post("api/users/login", credentials); //Endpoint is required.
+      const responce = await axios.post("api/users/login", credentials);
       //
       setAuthHeader(responce.data.token);
       //
+      console.log("logIn", responce.data.token);
       return responce.data;
       //
     } catch (e) {

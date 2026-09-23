@@ -1,18 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-
-//Information about the format of data received from the backend is required. Endpoints are required.
+import { fetchCategories } from "./categories.js";
+import { updateCategory } from "../../utils/formatCategory.js";
 
 const URLTRANSACTIONS = "http://localhost:3000/";
 
+//checked
 export const fetchAllTransactions = createAsyncThunk(
   "transactions/fetchAllTransactions",
   async (_, thunkAPI) => {
     try {
       //
-      const responce = await axios.get(`${URLTRANSACTIONS}/transactions`);
+      const responce = await axios.get(`${URLTRANSACTIONS}api/transactions`);
       //
-      return responce;
+      const categories = await fetchCategories();
+      return updateCategory(responce.data.data, categories);
       //
     } catch (e) {
       return thunkAPI.rejectWithValue(e.massege);
@@ -20,17 +22,19 @@ export const fetchAllTransactions = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the form transaction is required.
+//checked
 export const addTransaction = createAsyncThunk(
   "transactions/addTransaction",
   async (transactionData, thunkApi) => {
     try {
       //
-      const responce = await axios.post(`${URLTRANSACTIONS}/tasks`, {
-        transactionData,
-      });
+      const responce = await axios.post(
+        `${URLTRANSACTIONS}api/transactions`,
+        transactionData
+      );
       //
-      return responce;
+
+      return responce.data;
       //
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
@@ -38,17 +42,18 @@ export const addTransaction = createAsyncThunk(
   }
 );
 
-//Information about the format of data received from the backend is required. Endpoints are required.
+//checked.
 export const deleteTransaction = createAsyncThunk(
   "transactions/deleteTransaction",
-  async (transaction, thunkAPI) => {
+  async (id, thunkAPI) => {
     try {
       //
       const responce = await axios.delete(
-        `${URLTRANSACTIONS}/transactions/${transaction.id}`
+        `${URLTRANSACTIONS}api/transactions/${id}`
       );
       //
-      return responce;
+      console.log("selete", responce.data);
+      return responce.data;
       //
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

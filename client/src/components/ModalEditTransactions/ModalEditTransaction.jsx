@@ -4,12 +4,15 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Datetime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
-import { updateTransactionById } from "../../redux/transactions/operations.js";
+import { editTransaction } from "../../redux/transactions/operations.js";
 import CustomButton from "../CustomButton/CustomButton.jsx";
-import closeIcon from "client/src/assets/icons/close.svg";
-import calendaricon from "client/src/assets/icons/calendaricon.svg";
-import SelectIcon from "client/src/assets/icons/select-category.svg";
-import { selectTransactionId, selectTransactions } from "../../redux/selectors";
+import closeIcon from "../../assets/icons/close.svg";
+import calendaricon from "../../assets/icons/calendaricon.svg";
+import SelectIcon from "../../assets/icons/select-category.svg";
+import {
+  selectTransactionId,
+  selectTransactions,
+} from "../../redux/transactions/selectors.js";
 import css from "./ModalEditTransaction.module.css";
 
 import {
@@ -23,8 +26,8 @@ import {
   IconButton,
 } from "@mui/material";
 
-import { selectTransactionsCategories } from "../../redux/selectors";
-import TitleComponent from "../TitleComponent/Title.Component";
+import { selectTransactionsCategories } from "../../redux/transactions/selectors.js";
+import TitleComponent from "../TitleComponent/TitleComponent";
 
 const ModalEditTransaction = ({ toggleModal }) => {
   const dispatch = useDispatch();
@@ -102,17 +105,9 @@ const ModalEditTransaction = ({ toggleModal }) => {
     ev.preventDefault;
     const type = formData.isIncome ? "Income" : "Expense";
     const category = formData.isIncome ? "Income" : formData.category;
-    const year = new Date(formData.date).getFullYear();
-    const month = new Date(formData.date).toLocaleString("en-US", {
-      month: "long",
-    });
     toggleModal();
     dispatch(
-      updateTransactionById({
-        // unecessary i think
-        // id: transactionId,
-        // year: year.toString(),
-        // month: month,
+      editTransaction({
         date: new Date(formData.date),
         type: type,
         category: category,

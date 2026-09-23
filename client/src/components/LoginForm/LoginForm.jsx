@@ -9,8 +9,9 @@ import loginDesktop2x from "../../assets/images/login/loginDesktop@2x.png";
 import loginTablet from "../../assets/images/login/loginTablet.png";
 import loginTablet2x from "../../assets/images/login/loginTablet@2x.png";
 import wallet from "../../assets/icons/wallet.svg";
-import lock from "../../assets/icons/lock.svg";
-import email from "../../assets/icons/email.svg";
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+
 import PropTypes from "prop-types";
 
 const LoginForm = (props) => {
@@ -58,7 +59,7 @@ const LoginForm = (props) => {
             </div>
             <div className={css.formField}>
               <label htmlFor="email" className={css.label}>
-                <img className={css.icon} src={email} alt="email" />
+                <EmailIcon className={css.icon} />
                 <Field
                   type="email"
                   id="email"
@@ -73,7 +74,7 @@ const LoginForm = (props) => {
                 ) : null}
               </label>
               <label htmlFor="password" className={css.label}>
-                <img className={css.icon} src={lock} alt="lock" />
+                <LockIcon className={css.icon} />
                 <Field
                   type="password"
                   id="password"

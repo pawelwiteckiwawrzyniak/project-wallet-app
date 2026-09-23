@@ -6,7 +6,7 @@ import { LoadSpinner } from "../LoadSpinner/LoadSpinner";
 
 // styled components
 import { useDispatch, useSelector } from "react-redux";
-import financeSelectors from "../../redux/transactions/selectors.js";
+import financeSelectors from "../../redux/finance/finance-selectors.js";
 import financeOperations from "../../redux/finance/finance-operations.js";
 
 import {
